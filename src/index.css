@@ -1,0 +1,22 @@
+@font-face {
+  font-family: "Avenir";
+  src: url(./fonts/avenir-next.ttf);
+}
+
+@font-face {
+  font-family: "Avenir Next Bold";
+  src: url(./fonts/avenir-next-bold.ttf);
+}
+
+a {
+  text-decoration: none;
+  color: #00aeef;
+}
+
+body {
+  margin: 0;
+}
+
+div:focus {
+  outline: none;
+}
