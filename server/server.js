@@ -1,16 +1,22 @@
-import robots from "robots.txt";
-import bodyParser from "body-parser";
-import compression from "compression";
-import cookieParser from "cookie-parser";
-import express from "express";
-import morgan from "morgan";
-import path from "path";
-import Loadable from "react-loadable";
-import dotenv from "dotenv";
-import loader from "./loader";
+/* tslint:disable:no-console */
+
+import bodyParser from 'body-parser';
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
+import morgan from 'morgan';
+import path from 'path';
+import Loadable from 'react-loadable';
+import robots from 'robots.txt';
+import Database from './database/mongoose';
+import loader from './loader';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+app.set('etag', false);
 
 /* Dotenv
  *
@@ -27,17 +33,34 @@ dotenv.config();
  * application’s request-response cycle.
  */
 
-app.set("etag", false);
+const corsConfig = {
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'Content-Length',
+    'X-Requested-With',
+    'Accept',
+    'Cache'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
+  optionsSuccessStatus: 200,
+  origin: true
+};
+app.use(cors(corsConfig));
 
-app.use(robots(path.join(__dirname, "/data/robots.txt")));
+app.use(robots(path.join(__dirname, '/data/robots.txt')));
+
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 app.use(cookieParser());
-app.use(express.static(path.resolve(__dirname, "../build"), { etag: false }));
-app.use(express.Router().get("/", loader)); // Set up homepage with loader
-app.use(loader); // Loader captures all other page requests
+Database.init(app);
+
+app.use(express.Router().get('/', loader)); // Set up homepage with loader
+app.use(express.static(path.resolve(__dirname, '../build'), { etag: false }));
+app.use(loader); // Loader captures all other requests
 
 /* Loadable
  *
@@ -60,19 +83,19 @@ Loadable.preloadAll()
  * Server errors are handled here
  */
 
-app.on("error", error => {
-  if (error.syscall !== "listen") {
+app.on('error', error => {
+  if (error.syscall !== 'listen') {
     throw error;
   }
 
-  const bind = typeof PORT === "string" ? `Pipe ${PORT}` : `Port ${PORT}`;
+  const bind = typeof PORT === 'string' ? `Pipe ${PORT}` : `Port ${PORT}`;
 
   switch (error.code) {
-    case "EACCES":
+    case 'EACCES':
       console.error(`${bind} requires elevated privileges`); // eslint-disable-line no-console
       process.exit(1);
       break;
-    case "EADDRINUSE":
+    case 'EADDRINUSE':
       console.error(`${bind} is already in use`); // eslint-disable-line no-console
       process.exit(1);
       break;

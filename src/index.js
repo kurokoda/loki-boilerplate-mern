@@ -1,38 +1,41 @@
-import {StyleSheet} from "aphrodite";
-import {ConnectedRouter} from "connected-react-router";
-import React from "react";
-import {hydrate, render} from "react-dom";
-import {Frontload} from "react-frontload";
-import Loadable from "react-loadable";
-import {Provider} from "react-redux";
-import {PersistGate} from "redux-persist/es/integration/react";
-import App from "./container/app";
-import Loading from "./component/loading";
-import "./index.css";
-import createStore from "./store";
+import { StyleSheet } from 'aphrodite';
+import { ConnectedRouter } from 'connected-react-router';
+import React from 'react';
+import { hydrate, render } from 'react-dom';
+import { Frontload } from 'react-frontload';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/es/integration/react';
+import { hydrateLocalizationData } from './actions/localization';
+import Loading from './component/loading';
+import App from './container/app';
+import './index.css';
+import localizationData from './localization/en-us.json';
+import createStore from './store';
 
-const {store, history, persistor} = createStore();
+const { store, history, persistor } = createStore();
 
 const Application = (
-    <Provider store={store}>
-      <PersistGate loading={<Loading />} persistor={persistor}>
-        <ConnectedRouter history={history}>
-          <Frontload noServerRender>
-            <App />
-          </Frontload>
-        </ConnectedRouter>
-      </PersistGate>
-    </Provider>
+  <Provider store={store}>
+    <PersistGate loading={<Loading />} persistor={persistor}>
+      <ConnectedRouter history={history}>
+        <Frontload noServerRender>
+          <App />
+        </Frontload>
+      </ConnectedRouter>
+    </PersistGate>
+  </Provider>
 );
 
-const root = document.querySelector("#root");
-StyleSheet.rehydrate(window.renderedClassNames);
-if (process.env.NODE_ENV === "production") {
-  // We hydrate in production to get fast page loads by attaching event listeners after the initial render
-  Loadable.preloadReady().then(() => {
-    hydrate(Application, root);
-  });
+if (store.getState().localization) {
+  launch();
 } else {
-  // We render normally if we're not running on the server
+  const stringifiedLocalizationData = JSON.stringify(localizationData);
+  store.dispatch(hydrateLocalizationData(stringifiedLocalizationData));
+  launch();
+}
+
+function launch() {
+  const root = document.querySelector('#root');
+  StyleSheet.rehydrate(window.renderedClassNames);
   render(Application, root);
 }

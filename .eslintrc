@@ -2,12 +2,16 @@
   "extends": ["airbnb", "react-app", "prettier"],
   "plugins": ["prettier"],
   "rules": {
+    "comma-dangle": ["error", "never"],
     "import/prefer-default-export": 0,
     "jsx-a11y/href-no-hash": [0],
+    "jsx-a11y/label-has-associated-control": 0,
+    "jsx-a11y/label-has-for": 0,
     "react/prefer-stateless-function": 0,
     "react/require-optimization": 2,
     "react/sort-comp": 0,
     "prettier/prettier": ["error"],
+    "quotes": ["error", "single"],
     "no-console": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "valid-jsdoc": "error"

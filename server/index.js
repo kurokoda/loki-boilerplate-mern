@@ -1,6 +1,6 @@
-const md5File = require("md5-file");
-const path = require("path");
-const ignoreStyles = require("ignore-styles");
+const md5File = require('md5-file');
+const path = require('path');
+const ignoreStyles = require('ignore-styles');
 
 /*
  * ignoreStyles is a babel/register style hook to ignore style imports when
@@ -10,7 +10,7 @@ const ignoreStyles = require("ignore-styles");
  * https://www.npmjs.com/package/ignore-styles
  */
 const register = ignoreStyles.default;
-const extensions = [".gif", ".jpeg", ".jpg", ".png", ".svg"];
+const extensions = ['.gif', '.jpeg', '.jpg', '.png', '.svg'];
 register(ignoreStyles.DEFAULT_EXTENSIONS, (mod, filename) => {
   if (extensions.find(extension => filename.endsWith(extension))) {
     const hash = md5File.sync(filename).slice(0, 8);
@@ -32,9 +32,9 @@ require('@babel/register')({
     'syntax-dynamic-import',
     'dynamic-import-node',
     'react-loadable/babel',
-    '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-proposal-class-properties'
   ],
-  presets: ['@babel/preset-env', '@babel/preset-react'],
+  presets: ['@babel/preset-env', '@babel/preset-react']
 });
 
-require("./server");
+require('./server');

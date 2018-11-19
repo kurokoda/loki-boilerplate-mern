@@ -1,21 +1,18 @@
 /* eslint-disable react/prefer-stateless-function */
 
-import React, { Component } from "react";
-import { withRouter } from "react-router";
-import Body from "../../container/body";
-import Footer from "../../container/footer";
-import Header from "../../container/header";
-import Helmet from "./helmet";
+import { css, StyleSheet } from 'aphrodite';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+import Modal from '../../component/modal';
+import Body from '../../container/body';
+import Footer from '../../container/footer';
+import Header from '../../container/header';
+import Subheader from '../../component/subheader';
+import Helmet from './helmet';
+import style from '../../config/style';
 
 /**
  * This is the top-level application component. It acts as the root of the component tree
- *
- * Children:
- * * `<ApplicationHelmet>`
- * * `<Header>`
- * * `<Body>`
- * * `<Footer>`
- *
  */
 
 class App extends Component {
@@ -24,35 +21,55 @@ class App extends Component {
    * @returns {boolean} The evaluation to determine whether the component should
    * update when its props change
    */
-
-  componentDidMount() {
-    const { history, analyticsPageViewAction } = this.props;
-    let currentLocation = null;
-
-    this.routeChangeListenerDismiss = history.listen(location => {
-      if (currentLocation !== location.pathname) {
-        analyticsPageViewAction(location.pathname);
-        currentLocation = location.pathname;
-      }
-    });
+  shouldComponentUpdate() {
+    return true;
   }
-
-  componentWillUnmount() {
-    this.routeChangeListenerDismiss();
-  }
-
-  shouldComponentUpdate = () => true;
 
   render() {
+    const { modal } = this.props;
+    const classes = App.getClasses();
     return (
-      <main>
+      <main className={classes.applicationContainer} id="application">
         <Helmet />
-        <Header {...this.props} />
+        <div className={classes.headerContainer}>
+          <Header {...this.props} />
+        </div>
+        <Subheader />
         <Body {...this.props} />
         <Footer {...this.props} />
+        <div className={classes.modalContainer}>
+          <Modal config={modal} />
+        </div>
       </main>
     );
   }
 }
+
+App.getClasses = () => {
+  const styles = App.getStyles();
+
+  return {
+    applicationContainer: css(styles.applicationContainer),
+    headerContainer: css(styles.headerContainer),
+    modalContainer: css(styles.modalContainer)
+  };
+};
+
+App.getStyles = () =>
+  StyleSheet.create({
+    applicationContainer: {
+      backgroundColor: style.app.color.background,
+      position: 'relative'
+    },
+    headerContainer: {
+      position: 'absolute',
+      width: '100%',
+      zIndex: '100'
+    },
+    modalContainer: {
+      position: 'absolute',
+      zIndex: '1000'
+    }
+  });
 
 export default withRouter(App);

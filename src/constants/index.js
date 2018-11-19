@@ -1,5 +1,3 @@
-import * as color from "./color";
-import icon from "./icon";
+import * as regex from './regex';
 
-export const COLOR = color;
-export const ICON = icon;
+export const REGEX = regex;

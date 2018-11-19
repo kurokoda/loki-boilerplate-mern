@@ -1,20 +1,21 @@
 /* eslint-disable no-underscore-dangle */
 
-import GoogleAnalytics from "@redux-beacon/google-analytics";
-import GoogleTagManager from "@redux-beacon/google-tag-manager";
-import { connectRouter, routerMiddleware } from "connected-react-router";
-import { createBrowserHistory, createMemoryHistory } from "history";
-import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-import { createMiddleware } from "redux-beacon";
-import { persistCombineReducers, persistStore } from "redux-persist";
-import immutableTransform from "redux-persist-transform-immutable";
-import thunk from "redux-thunk";
+import GoogleAnalytics from '@redux-beacon/google-analytics';
+import GoogleTagManager from '@redux-beacon/google-tag-manager';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory, createMemoryHistory } from 'history';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { createMiddleware } from 'redux-beacon';
+import { persistCombineReducers, persistStore } from 'redux-persist';
+import immutableTransform from 'redux-persist-transform-immutable';
+import thunk from 'redux-thunk';
 import {
   googleAnalyticsEventsMap,
   googleTagManagerEventsMap
-} from "../actions/analytics";
-import reducers from "../reducers/index";
-import { isBrowserEnvironment } from "../utils/isomorphic";
+} from '../actions/analytics';
+import CONFIG from '../config';
+import reducers from '../reducers/index';
+import { isBrowserEnvironment } from '../utils/isomorphic';
 
 const googleAnalyticsMiddleWare = createMiddleware(
   googleAnalyticsEventsMap,
@@ -27,12 +28,12 @@ const googleTagManagerMiddleWare = createMiddleware(
 );
 
 export const isServer = !(
-  typeof window !== "undefined" &&
+  typeof window !== 'undefined' &&
   window.document &&
   window.document.createElement
 );
 
-const configureStore = (url = "/") => {
+const configureStore = (url = '/') => {
   let history = isServer
     ? createMemoryHistory({ initialEntries: [url] })
     : createBrowserHistory();
@@ -48,21 +49,21 @@ const configureStore = (url = "/") => {
      * This require() call is necessary due to dependencies within
      * the package that break server-side rendering.
      */
-    const storage = require("redux-persist/es/storage").default; // eslint-disable-line global-require
+    const storage = require('redux-persist/es/storage').default; // eslint-disable-line global-require
 
     const persistConfig = {
       blacklist: [],
-      key: "tylt-web-votes",
+      key: CONFIG.PERSISTENCE_LAYER.KEY,
       storage, // LocalStorage if web, AsyncStorage if react-native
       transforms: [immutableTransform()],
-      whitelist: ["votes"]
+      whitelist: ['user']
     };
 
     rootReducer = persistCombineReducers(persistConfig, reducers);
 
-    if (process.env.NODE_ENV !== "production") {
-      devToolsExtension = window.devToolsExtension;
-      if (typeof devToolsExtension === "function") {
+    if (process.env.REACT_APP_SHOW_REDUX_DEV_TOOLS === 'true') {
+      devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__; // eslint-disable-line prefer-destructuring
+      if (typeof devToolsExtension === 'function') {
         enhancers.push(devToolsExtension());
       }
     }
@@ -102,9 +103,9 @@ const configureStore = (url = "/") => {
   }
 
   return {
-    store,
     history,
-    persistor
+    persistor,
+    store
   };
 };
 

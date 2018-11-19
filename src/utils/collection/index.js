@@ -1,4 +1,4 @@
-import Immutable from "immutable";
+import Immutable from 'immutable';
 
 export const chunkArray = (input, size) => {
   const results = [];

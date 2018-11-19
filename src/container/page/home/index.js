@@ -1,35 +1,19 @@
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import {
-  analyticsCallArticleLinkAction,
-  analyticsClearArticleMetadata,
-  moreFromTyltAction
-} from "../../../actions/analytics";
-import {
-  fetchHomePageData,
-  fetchHomePageDataSuccess,
-  fetchPageDataError,
-  flushPageData
-} from "../../../actions/page";
+  fetchPageData
+} from '../../../actions/page';
+import { HomePage } from '../../../component/page';
 
-import { HomePage } from "../../../component/page";
-
-export function mapStateToProps({ homePageData }) {
+export function mapStateToProps({ pageData, localization }) {
   return {
-    pageData: homePageData
+    localization,
+    pageData
   };
 }
 
 export function mapDispatchToProps(dispatch) {
   return {
-    fetchPageData: () => dispatch(fetchHomePageData()),
-    fetchPageDataSuccess: payload =>
-      dispatch(fetchHomePageDataSuccess(payload)),
-    fetchPageDataError: () => dispatch(fetchPageDataError()),
-    flushPageData: () => dispatch(flushPageData()),
-    analyticsCallArticleLinkAction: () =>
-      dispatch(analyticsCallArticleLinkAction()),
-    analyticsClearArticleMetadata: () =>
-      dispatch(analyticsClearArticleMetadata())
+    fetchPageData: (type, onSuccess, onError) => dispatch(fetchPageData(type, onSuccess, onError))
   };
 }
 

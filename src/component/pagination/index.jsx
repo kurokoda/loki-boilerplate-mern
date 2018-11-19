@@ -1,9 +1,9 @@
-import { css, StyleSheet } from "aphrodite";
-import { times } from "lodash";
-import PropTypes from "prop-types";
-import React, { Component } from "react";
-import { getIncrementedElementName } from "../../utils/collection";
-import { PaginationButton } from "../button";
+import { css, StyleSheet } from 'aphrodite';
+import { times } from 'lodash';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { getIncrementedElementName } from '../../utils/collection';
+import { PaginationButton } from '../button';
 
 class Pagination extends Component {
   constructor(props) {
@@ -83,7 +83,7 @@ class Pagination extends Component {
           return pageNumber <= this.pageCount ? (
             <PaginationButton
               active={this.state.activeIndex === pageNumber}
-              key={getIncrementedElementName("paginationButton")}
+              key={getIncrementedElementName('paginationButton')}
               onClick={event => {
                 event.preventDefault();
                 event.stopPropagation();
@@ -112,8 +112,8 @@ class Pagination extends Component {
 Pagination.getStyles = () =>
   StyleSheet.create({
     buttonContainer: {
-      display: "block",
-      textAlign: "center"
+      display: 'block',
+      textAlign: 'center'
     }
   });
 

@@ -1,0 +1,17 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "binary-expression-operand-order": true,
+        "interface-name": false,
+        "member-ordering": [true, {"order": "fields-first"}],
+        "no-var-requires": false,
+        "object-literal-sort-keys": true,
+        "ordered-imports": true,
+        "trailing-comma": ["error", "never"]
+    },
+    "rulesDirectory": []
+}

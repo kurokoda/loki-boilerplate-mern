@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class ErrorPage extends Component {
   /**
@@ -6,7 +6,9 @@ class ErrorPage extends Component {
    * @returns {boolean} The evaluation to determine whether the component should
    * update when its props change
    */
-  shouldComponentUpdate = () => true;
+  shouldComponentUpdate() {
+    return true;
+  }
 
   render() {
     return <div id="error-page">ERROR</div>;

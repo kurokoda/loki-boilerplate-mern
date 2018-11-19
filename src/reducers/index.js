@@ -1,27 +1,13 @@
-import articlePageData from "./articlePageData";
-import homePageData from "./homePageData";
-import resultPageData from "./resultPageData";
-import sessionVotes from "./sessionVotes";
-import topicPageData from "./topicPageData";
-import votes from "./votes";
-import votingModules from "./votingModules";
-
-const rehydrated = (state = false, action) => {
-  switch (action.type) {
-    case "persist/REHYDRATE":
-      return true;
-    default:
-      return state;
-  }
-};
+import localization from './localization';
+import modal from './modal';
+import pageData from './pageData';
+import rehydrated from './rehydrated';
+import user from './user';
 
 export default {
-  articlePageData,
-  homePageData,
-  resultPageData,
-  sessionVotes,
-  topicPageData,
+  localization,
+  modal,
+  pageData,
   rehydrated,
-  votes,
-  votingModules
+  user
 };

@@ -1,172 +1,67 @@
 /** @module HomePage */
 
-import { css, StyleSheet } from "aphrodite";
-import Immutable from "immutable";
-import PropTypes from "prop-types";
-import React, { Component, Fragment } from "react";
-import ImmutablePropTypes from "react-immutable-proptypes";
-import { withRouter } from "react-router";
-import ReactRouterPropTypes from "react-router-prop-types";
-import { getIncrementedElementName } from "../../../utils/collection";
-import {
-  isBrowserEnvironment,
-  isServerEnvironment
-} from "../../../utils/isomorphic";
-import { getHomePageDataUrl } from "../../../utils/route";
-import { ROUTE as ROUTE_REGEX } from "../../../constants/regex";
-import Loading from "../../loading";
-import CallToAction from "../../section/CallToAction";
-import Featured from "../../section/Featured";
-import General from "../../section/General";
-import Result from "../../section/Result";
-import Topic from "../../section/Topic";
-import Jumbotron from "../../tile/Jumbotron";
-import Helmet from "./helmet";
-
-/**
- * The application home page component.
- *
- * Children:
- * * `<HomeHelmet>`
- * * `<Jumbotron>`
- * * `<FeaturedSection>`
- * * `<TopicSection>`
- * * `<ResultSection>`
- * * `<GeneralSection>`
- *
- * @returns {xml} The HomePage component
- */
+import { css, StyleSheet } from 'aphrodite';
+import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import { withRouter } from 'react-router';
+import { HOME as ROUTE_CONFIG } from '../../../utils/route/config';
+import Loading from '../../loading';
+import { Well } from '../../shared';
+import Helmet from './helmet';
+import style from '../../../config/style';
 
 class HomePage extends Component {
-  state = {
-    layout: null
-  };
-
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
    * update when its props change
    */
-  shouldComponentUpdate = () => true;
+  shouldComponentUpdate() {
+    return true;
+  }
 
   /**
    * Fetches page data, resets page position, and adds onResize event listener
    * @returns {void}
    */
   componentDidMount() {
-    const { history, pageData, analyticsClearArticleMetadata } = this.props;
+    console.log('hasPageData', this.hasPageData);
+    !this.hasPageData && this.fetchPageData();
 
-    if (!pageData) {
-      this.fetchPageData();
-    }
-    this.unlisten = history.listen(this.onLocationChange);
     window.scrollTo(0, 0);
-    window.addEventListener("resize", this.onResize);
-    this.onResize();
-    analyticsClearArticleMetadata();
-  }
-
-  componentDidUpdate() {
-    const { pageData } = this.props;
-
-    !pageData && isBrowserEnvironment && this.fetchPageData();
-  }
-
-  componentWillUnmount() {
-    const { flushPageData } = this.props;
-
-    this.unlisten();
-    window.removeEventListener("resize", this.onResize);
-    flushPageData();
   }
 
   render() {
     const classes = HomePage.getClasses();
-    const { layout } = this.state;
-    const { history, pageData, analyticsCallArticleLinkAction } = this.props;
-
-    let filteredPageData;
-
-    if (pageData) {
-      filteredPageData = HomePage.filterPageData(pageData, layout);
-    }
+    const { localization } = this.props;
+    const title = localization.getIn(['home', 'title']).toUpperCase();
 
     return (
       <Fragment>
-        {// Browser render with data:
+        {// render with data:
         // display the page normally
-        Boolean(pageData && isBrowserEnvironment) && (
-          <div className={classes.container}>
-            <h1 className={classes.hiddenHeader}>The Tylt</h1>
+        this.hasPageData && (
+          <div id="home-page" className={classes.container}>
             <Helmet />
-            <div id="home-page" className={classes.container}>
-              <Jumbotron
-                layout={layout}
-                config={filteredPageData.get("jumbotron")}
-                analyticsCallArticleLinkAction={analyticsCallArticleLinkAction}
-              />
-              <div className={classes.spacer} />
-              <div className={classes.content}>
-                {layout === "expanded" && (
-                  <Featured
-                    config={filteredPageData.get("featured")}
-                    mode="group"
-                    analyticsCallArticleLinkAction={
-                      analyticsCallArticleLinkAction
-                    }
-                  />
-                )}
-                <div>
-                  {filteredPageData
-                    .getIn(["topics", "sections"])
-                    .map((section, index) => {
-                      const divider = this.getDividerForIndex(index);
-                      return (
-                        <div key={getIncrementedElementName("topicSection")}>
-                          <Topic
-                            config={section}
-                            layout={layout}
-                            analyticsCallArticleLinkAction={
-                              analyticsCallArticleLinkAction
-                            }
-                          />
-                          {divider && <CallToAction config={divider} />}
-                        </div>
-                      );
-                    })}
-                </div>
-                <Result
-                  config={filteredPageData.get("results")}
-                  viewAll
-                  analyticsCallArticleLinkAction={
-                    analyticsCallArticleLinkAction
-                  }
-                />
-                <General
-                  config={filteredPageData.get("general")}
-                  analyticsCallArticleLinkAction={
-                    analyticsCallArticleLinkAction
-                  }
-                />
-              </div>
-            </div>
+            <Well>
+              <h3 className={classes.header}>{title}</h3>
+              <h5 className={classes.text}>
+                A scalable react application foundation with a focus on
+                developer experience, performance, and best practices.
+              </h5>
+              <h5 className={classes.text}>
+                My goal was to move beyond the repetitive coding and copy-pasting involved in getting a full-fledged isomorphic web application running, in order to allow me to focus on the application-specific features. In other words, I wanted to get to the fun stuff as quickly as possible.
+              </h5>
+              <h5 className={classes.text}>
+                Food truck tbh art party yr. Gochujang crucifix palo santo, slow-carb hexagon flannel small batch neutra austin. Pok pok slow-carb quinoa, tbh occupy cronut bushwick. 3 wolf moon marfa vice live-edge. Schlitz bitters direct trade retro 8-bit lo-fi truffaut stumptown tacos banh mi kale chips knausgaard pop-up migas.
+              </h5>
+            </Well>
           </div>
         )}
-        {// Server render with data:
-        // Use helmet to populate Helmet and display the loading component
-        Boolean(pageData && isServerEnvironment) && (
-          <Fragment>
-            <h1 className={classes.hiddenHeader}>The Tylt</h1>
-            <Helmet
-              pageData={filteredPageData}
-              path={history.location.pathname}
-            />
-            <Loading />;
-          </Fragment>
-        )}
         {// Browser or server render without data:
-        //    display the loading component without Helmet
-        !pageData && <Loading />}
+        // display the loading component without Helmet
+        !this.hasPageData && <Loading />}
       </Fragment>
     );
   }
@@ -174,82 +69,23 @@ class HomePage extends Component {
   // Business logic
 
   fetchPageData() {
-    if (!this.isLoading) {
-      this.isLoading = true;
-      const url = getHomePageDataUrl();
-      const {
-        fetchPageData,
-        fetchPageDataSuccess,
-        fetchPageDataError
-      } = this.props;
-      const pathname = window.location.pathname;
-      const isHomeRoute = ROUTE_REGEX.HOME_PAGE.test(pathname);
-
-      fetchPageData();
-
-      if (isHomeRoute) {
-        fetch(url)
-          .then(
-            response =>
-              response.ok
-                ? Promise.resolve(response.json())
-                : Promise.reject("Invalid response in fetchPageData()")
-          )
-          .then(payload => {
-            this.isLoading = false;
-            fetchPageDataSuccess(payload);
-            this.onFetchPageDataSuccess();
-          })
-          .catch(error => {
-            this.isLoading = false;
-            fetchPageDataError(error);
-            this.onFetchPageDataError(error);
-          });
-      }
-    }
+    const { fetchPageData } = this.props;
+    console.log('fetching page data');
+    fetchPageData(
+      ROUTE_CONFIG.type,
+      this.onFetchPageDataSuccess,
+      this.onFetchPageDataError
+    );
   }
 
-  getDividerForIndex(index) {
-    const dividers = this.getCallToActionDividers();
-    return dividers.find(divider => divider.get("index") === index);
+  onFetchPageDataSuccess = () => {}; // tslint:disable-line:no-empty
+
+  onFetchPageDataError = error => {}; // tslint:disable-line:no-empty
+
+  get hasPageData() {
+    const { pageData } = this.props;
+    return pageData && pageData.get('pageType') === ROUTE_CONFIG.type;
   }
-
-  getCallToActionDividers() {
-    const { layout } = this.state;
-    return Immutable.fromJS([
-      {
-        index: 1,
-        callsToAction:
-          layout === "expanded"
-            ? [{ action: "twitter-follow" }, { action: "facebook-follow" }]
-            : [{ action: "twitter-follow" }]
-      },
-      {
-        index: 3,
-        callsToAction:
-          layout === "expanded"
-            ? [{ action: "instagram-follow" }, { action: "email" }]
-            : [{ action: "instagram-follow" }]
-      }
-    ]);
-  }
-
-  onLocationChange = location => {
-    const { flushPageData } = this.props;
-
-    flushPageData();
-  };
-
-  onResize = () => {
-    const layout = window.innerWidth > 768 ? "expanded" : "collapsed";
-    this.setState({ layout });
-  };
-
-  onFetchPageDataSuccess = () => {};
-
-  onFetchPageDataError = error => {};
-
-  onFetchVoteDataSuccess = () => {};
 }
 
 HomePage.getClasses = () => {
@@ -257,67 +93,9 @@ HomePage.getClasses = () => {
 
   return {
     container: css(styles.container),
-    content: css(styles.content),
-    hiddenHeader: css(styles.hiddenHeader),
-    spacer: css(styles.spacer)
+    header: css(styles.header),
+    text: css(styles.text)
   };
-};
-
-/**
- * Filters incoming page data, converting legacy and/or poorly named elements
- * into more intuitive naming conventions.
- * @methodof HomePage
- * @param {object} pageData The data to be filtered
- * @param {string} layout The current layout of the page, either 'expanded' or
- * 'collapsed, based on page width
- * @returns {object} The filtered data
- */
-HomePage.filterPageData = (pageData, layout) => {
-  /*
-   * TODO
-   *
-   * For some reason, the server side rendering fails to convert
-   * the hydrated pageData into an Immutable object, so conditionally
-   * applying toJS() to the pageData seems to be necessary for now.
-   *
-   * Not a terrible hack, but a hack.
-   */
-
-  const input = pageData.toJS ? pageData.toJS() : pageData;
-  const output = {
-    jumbotron: input.articlePageData.featuredArticles[0],
-    featured: input.articlePageData.featuredArticles.slice(1),
-    topics: input.articlePageData.topicSections,
-    results:
-      layout === "expanded"
-        ? input.articlePageData.resultsSection
-        : input.articlePageData.resultsSection.slice(0, 1),
-    general: input.articlePageData.articles.slice(0, 8)
-  };
-  return Immutable.fromJS(output);
-};
-
-HomePage.propTypes = {
-  /** Dispatches analytics action on article click */
-  analyticsCallArticleLinkAction: PropTypes.func.isRequired,
-  /** Dispatches analytics action on deletion of article metadata */
-  analyticsClearArticleMetadata: PropTypes.func.isRequired,
-  /** Dispatches action to request page data */
-  fetchPageData: PropTypes.func.isRequired,
-  /** Dispatches action to notify of page data request success */
-  fetchPageDataSuccess: PropTypes.func.isRequired,
-  /** Dispatches action to notify of page data request failure */
-  fetchPageDataError: PropTypes.func.isRequired,
-  /** Dispatches action to request page data deletion */
-  flushPageData: PropTypes.func.isRequired,
-  /** The application router's history */
-  history: ReactRouterPropTypes.history.isRequired,
-  /** Page data */
-  pageData: ImmutablePropTypes.map
-};
-
-HomePage.defaultProps = {
-  pageData: null
 };
 
 /**
@@ -326,42 +104,32 @@ HomePage.defaultProps = {
  * @returns {object} The class's styles
  */
 HomePage.getStyles = () =>
-  StyleSheet.create({
-    container: {},
-    homeView: {
-      backgroundColor: "white",
-      display: "flex",
-      flexDirection: "column",
-      overflowX: "hidden"
-    },
-
-    content: {
-      margin: "auto",
-      maxWidth: "1240px",
-
-      "@media (max-width: 768px)": {
-        margin: "0 40px"
+    StyleSheet.create({
+      container: {
+        minHeight: 'calc(100vh-100px)',
+        padding: '0 40px 0 40px',
+        width: '100%'
       },
-
-      "@media (max-width: 1300px)": {
-        margin: "0 20px"
+      header: {
+        color: style.about.color.headerText,
+        textTransform: 'uppercase'
+      },
+      text: {
+        color: style.about.color.text,
+        fontSize: '18px'
       }
-    },
-    hiddenHeader: {
-      position: "absolute",
-      visibility: "hidden"
-    },
-    spacer: {
-      display: "block",
-      height: "100px",
-      width: "100%",
-      margin: "0 auto",
+    });
 
-      "@media (max-width: 768px)": {
-        height: "40px"
-      }
-    }
-  });
+HomePage.propTypes = {
+  /** Dispatches action to request page data */
+  fetchPageData: PropTypes.func.isRequired /** Localization text */,
+  localization: ImmutablePropTypes.map.isRequired /** Page data */,
+  pageData: ImmutablePropTypes.map
+};
+
+HomePage.defaultProps = {
+  pageData: null
+};
 
 export default withRouter(HomePage);
 

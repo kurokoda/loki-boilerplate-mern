@@ -1,0 +1,24 @@
+{
+  "header": {
+    "links": {
+      "about": "acerca",
+      "features": "caracteristicas",
+      "signIn": "registrarse",
+      "signOut": "desconectar",
+      "signUp": "regístrate",
+      "welcome": "bienvenido"
+    }
+  },
+  "about": {
+    "title": "Bienvenido a la pagina principal"
+  },
+  "home": {
+    "title": "React/Redux repetitivo de aplicación"
+  },
+  "feature": {
+    "title": "característica"
+  },
+  "features": {
+    "title": "características"
+  }
+}

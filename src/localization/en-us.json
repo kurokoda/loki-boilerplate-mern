@@ -1,0 +1,24 @@
+{
+  "header": {
+    "links": {
+      "about": "about",
+      "features": "features",
+      "signIn": "sign in",
+      "signUp": "sign up",
+      "signOut": "sign out",
+      "welcome": "welcome"
+    }
+  },
+  "about": {
+    "title": "Welcome to the homepage"
+  },
+  "home": {
+    "title": "React/Redux application boilerplate"
+  },
+  "feature": {
+    "title": "feature page"
+  },
+  "features": {
+    "title": "features"
+  }
+}

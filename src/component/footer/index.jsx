@@ -1,7 +1,8 @@
-import { css, StyleSheet } from "aphrodite";
-import React, { Component } from "react";
-import { withRouter } from "react-router";
-import { ICON } from "../../constants/index";
+import { css, StyleSheet } from 'aphrodite';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+import Logo from '../../assets/images/logo';
+import CONFIG from '../../config';
 
 /**
  * The application footer component. Contains links and legal information
@@ -13,69 +14,69 @@ class Footer extends Component {
    * @returns {boolean} The evaluation to determine whether the component should
    * update when its props change
    */
-  shouldComponentUpdate = () => true;
+  shouldComponentUpdate() {
+    return true;
+  }
 
   render() {
     return (
-      <div name="footer" className={css(styles.footer)}>
-        <div name="logo" className={css(styles.container)}>
+      <div id="footer" className={css(styles.footer)}>
+        <div id="footer__logo-container" className={css(styles.container)}>
           <div className={css(styles.socialContainer)}>
-            <div name="logo" className={css(styles.logo)} />
+            <Logo size={50} backgroundColor="#000" />
             <div
-              name="socialMediaIcons"
+              id="footer__logo-container__socialMediaIcons"
               className={css(styles.socialMediaIconContainer)}
             >
               <a
-                name="facebook"
-                href="http://www.facebook.com/TheTylt/"
                 className={css(styles.contentColor)}
+                href={CONFIG.SOCIAL.FACEBOOK}
+                id="footer__logo-container__socialMediaIcons-facebook"
               >
                 <i className="fab fa-facebook" />
               </a>
               <a
-                name="twitter"
-                href="http://twitter.com/TheTylt"
                 className={css(styles.contentColor)}
+                href={CONFIG.SOCIAL.TWITTER}
+                id="footer__logo-container__socialMediaIcons-twitter"
               >
                 <i className="fab fa-twitter" />
               </a>
               <a
-                name="instagram"
-                href="http://www.instagram.com/thetylt/"
                 className={css(styles.contentColor)}
+                href={CONFIG.SOCIAL.INSTAGRAM}
+                id="footer__logo-container__socialMediaIcons-instagram"
               >
                 <i className="fab fa-instagram" />
               </a>
             </div>
           </div>
           <div className={css([styles.content, styles.contentColor])}>
-            © 2016 The Tylt
+            {CONFIG.COMPANY.COPYRIGHT}
           </div>
           <div className={css([styles.content, styles.contentColor])}>
             Use of and/or registration on any portion of this site constitutes
             acceptance of our &nbsp;
-            <a href="http://www.advance.net/advancelocalUserAgreement/user-agreement.html">
-              User Agreement
-            </a>
+            <a href={CONFIG.EXTERNAL_URL.USER_AGREEMENT}>User Agreement</a>
             &nbsp; (updated 5/25/18) and &nbsp;
-            <a href="https://www.advance.net/advancelocalUserAgreement/privacy-policy.html">
+            <a href={CONFIG.EXTERNAL_URL.PRIVACY_POLICY}>
               Privacy Policy and Cookie Statement &nbsp;
             </a>
             (updated 05/25/18).
           </div>
           <div className={css([styles.content, styles.contentColor])}>
-            © 2018 Advance Local Media LLC. All rights reserved
-            <a href="https://www.advancelocal.com/about-us/">&nbsp; About Us</a>
-            . The material on this site may not be reproduced,
+            © 2018
+            {CONFIG.COMPANY.LEGAL_NAME}
+            All rights reserved
+            <a href={CONFIG.EXTERNAL_URL.ABOUT_US}>&nbsp; About Us</a>
+            .
+            <br />
+            <br />
+            The material on this site may not be reproduced,
             distributed,transmitted,cached or otherwise used, except with the
-            prior written permission of Advance Local.
+            prior written permission of
+            {CONFIG.COMPANY.NAME.SIMPLE}
           </div>
-          <a
-            href="https://www.advance.net/advancelocalUserAgreement/privacy-policy.html#california_top/"
-            className={css(styles.content)}
-          >
-            Your California Privacy Rights
-          </a>
         </div>
       </div>
     );
@@ -84,86 +85,74 @@ class Footer extends Component {
 
 export default withRouter(Footer);
 
+// TODO convert JS-in-CSS to CSS when possible
+
 const styles = StyleSheet.create({
-  footer: {
-    backgroundColor: "#000000",
-    color: "#FFFFFF",
-    height: "254px",
-    margin: "75px 0 0 0",
-    position: "relative",
-
-    "@media (max-width: 768px)": {
-      height: "428px"
-    }
-  },
   container: {
-    alignItems: "center",
-    bottom: "0",
-    display: "flex",
-    flexDirection: "column",
-    height: "200px",
-    justifyContent: "space-between",
-    left: "0",
-    margin: "auto",
-    maxWidth: "700px",
-    position: "absolute",
-    right: "0",
-    textAlign: "center",
-    top: "0",
-    width: "100%",
+    alignItems: 'center',
+    bottom: '0',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '200px',
+    justifyContent: 'space-between',
+    left: '0',
+    margin: 'auto',
+    maxWidth: '800px',
+    position: 'absolute',
+    right: '0',
+    textAlign: 'center',
+    top: '0',
+    width: '100%',
 
-    "@media (max-width: 768px)": {
-      height: "400px"
-    }
-  },
-  socialContainer: {
-    display: "inline-block",
-    justifyContent: "space-between",
-    width: "200px",
-
-    "@media (max-width: 768px)": {
-      display: "flex",
-      margin: "30px auto 0px auto",
-      width: "300px"
-    }
-  },
-  socialMediaIconContainer: {
-    display: "flex",
-    fontSize: "20px",
-    justifyContent: "space-between",
-    margin: "10px 0 0 0",
-    width: "100px",
-
-    "@media (max-width: 768px)": {
-      alignContent: "flex-end",
-      fontSize: "35px",
-      margin: "12px",
-      width: "150px"
-    }
-  },
-  logo: {
-    backgroundImage: ICON.SECTION.TYLT_LOGO_WHITE,
-    backgroundRepeat: "no-repeat",
-    height: "47px",
-    width: "75px",
-
-    "@media (max-width: 768px)": {
-      height: "60px",
-      margin: "6px 0 0 0",
-      width: "120px"
+    '@media (max-width: 768px)': {
+      height: '400px'
     }
   },
   content: {
-    fontFamily: "Open Sans",
-    fontSize: "10px",
+    fontFamily: 'Open Sans',
+    fontSize: '10px',
 
-    "@media (max-width: 768px)": {
-      fontSize: "14px",
-      padding: "5px",
-      textAlign: "center"
+    '@media (max-width: 768px)': {
+      fontSize: '14px',
+      padding: '5px',
+      textAlign: 'center'
     }
   },
   contentColor: {
-    color: "#ffffff;"
+    color: '#ffffff;'
+  },
+  footer: {
+    backgroundColor: '#000000',
+    color: '#FFFFFF',
+    height: '254px',
+    margin: '75px 0 0 0',
+    position: 'relative',
+
+    '@media (max-width: 768px)': {
+      height: '428px'
+    }
+  },
+  socialContainer: {
+    display: 'inline-block',
+    width: '100px',
+
+    '@media (max-width: 768px)': {
+      display: 'flex',
+      margin: '30px auto 0px auto',
+      width: '300px'
+    }
+  },
+  socialMediaIconContainer: {
+    display: 'flex',
+    fontSize: '20px',
+    justifyContent: 'space-between',
+    margin: '10px 0 0 0',
+
+    '@media (max-width: 768px)': {
+      alignContent: 'flex-end',
+      fontSize: '35px',
+      margin: '12px',
+      width: '150px'
+    }
   }
 });
