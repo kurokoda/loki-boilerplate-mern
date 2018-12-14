@@ -13,6 +13,7 @@ import localizationData from './localization/en-us.json';
 import createStore from './store';
 
 const { store, history, persistor } = createStore();
+const root = document.querySelector('#root');
 
 const Application = (
   <Provider store={store}>
@@ -26,16 +27,11 @@ const Application = (
   </Provider>
 );
 
-if (store.getState().localization) {
-  launch();
-} else {
+if (!store.getState().localization) {
   const stringifiedLocalizationData = JSON.stringify(localizationData);
   store.dispatch(hydrateLocalizationData(stringifiedLocalizationData));
-  launch();
 }
 
-function launch() {
-  const root = document.querySelector('#root');
-  StyleSheet.rehydrate(window.renderedClassNames);
-  render(Application, root);
-}
+StyleSheet.rehydrate(window.renderedClassNames);
+
+render(Application, root);
