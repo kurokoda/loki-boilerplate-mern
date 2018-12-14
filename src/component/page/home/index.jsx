@@ -9,7 +9,7 @@ import { HOME as ROUTE_CONFIG } from '../../../utils/route/config';
 import { localized } from '../../../utils/localization';
 
 import Loading from '../../loading';
-import { Well } from '../../shared';
+import Well from '../../well';
 import Helmet from './helmet';
 import style from '../../../theme';
 

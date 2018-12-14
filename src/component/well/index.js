@@ -4,7 +4,7 @@ import { css, StyleSheet } from 'aphrodite';
 import React, { Component, Fragment} from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import style from '../../../theme';
+import style from '../../theme/index';
 
 class Well extends Component {
   /**
@@ -56,7 +56,7 @@ Well.getStyles = () =>
         borderRadius: '8px',
         boxShadow: '0 4px 7px 0 rgba(0, 0, 0, 0.2)',
         margin: '0 0 40px 0',
-        padding: '20px 20px 20px 20px'
+        padding: '20px 20px 0px 20px'
       },
       name: {
         margin: '10px 10px 10px',

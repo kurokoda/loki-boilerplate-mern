@@ -5,7 +5,7 @@ import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import Feature from '../feature';
-import { Well } from '../../../shared';
+import Well from '../../../well';
 import style from '../../../../theme';
 
 class Category extends Component {

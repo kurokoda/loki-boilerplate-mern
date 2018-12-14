@@ -4,7 +4,7 @@ import { css, StyleSheet } from 'aphrodite';
 import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Redirect, withRouter } from 'react-router';
-import { Well } from '../../shared';
+import Well from '../../well';
 import Helmet from './helmet';
 import style from '../../../theme';
 import { localized } from '../../../utils/localization';
