@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import style from '../../config/style';
 import { getIncrementedElementName } from '../../utils/collection';
+import { localized } from '../../utils/localization';
 import { ROUTES } from '../../utils/route';
 import SignInForm from '../form/signIn';
 import SignUpForm from '../form/signUp';
@@ -49,12 +50,7 @@ class Header extends Component {
                     key={getIncrementedElementName('desktopPageLink')}
                     route={route}
                   >
-                    {localization
-                      .getIn(
-                        ['header', 'links', route.camelCaseKey] ||
-                          'NOT LOCALIZED'
-                      )
-                      .toUpperCase()}
+                    {localized(localization, ['header', 'links', route.camelCaseKey]).toUpperCase()}
                   </PageLink>
                 );
               }
@@ -64,22 +60,16 @@ class Header extends Component {
               {!user && (
                 <Fragment>
                   <ActionLink callback={this.signIn}>
-                    {localization
-                      .getIn(['header', 'links', 'signIn'] || 'NOT LOCALIZED')
-                      .toUpperCase()}
+                    {localized(localization, ['header', 'links', 'signIn']).toUpperCase()}
                   </ActionLink>
                   <ActionLink callback={this.signUp}>
-                    {localization
-                      .getIn(['header', 'links', 'signUp'] || 'NOT LOCALIZED')
-                      .toUpperCase()}
+                    {localized(localization, ['header', 'links', 'signUp']).toUpperCase()}
                   </ActionLink>
                 </Fragment>
               )}
               {user && (
                 <ActionLink callback={signOut}>
-                  {localization
-                    .getIn(['header', 'links', 'signOut'] || 'NOT LOCALIZED')
-                    .toUpperCase()}
+                  {localized(localization, ['header', 'links', 'signOut']).toUpperCase()}
                 </ActionLink>
               )}
             </div>

@@ -6,6 +6,7 @@ import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import { ABOUT as ROUTE_CONFIG } from '../../../utils/route/config';
+import { localized } from '../../../utils/localization';
 import Loading from '../../loading';
 import { Well } from '../../shared';
 import Helmet from './helmet';
@@ -33,7 +34,7 @@ class AboutPage extends Component {
   render() {
     const classes = AboutPage.getClasses();
     const { localization } = this.props;
-    const title = localization.getIn(['about', 'title']).toUpperCase();
+    const title = localized(localization, ['about', 'title']).toUpperCase();
 
     return (
       <Fragment>

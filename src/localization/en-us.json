@@ -10,15 +10,21 @@
     }
   },
   "about": {
-    "title": "Welcome to the homepage"
+    "title": "About us",
+    "subtitle": "What are we all about?"
   },
   "home": {
-    "title": "React/Redux application boilerplate"
+    "title": "Welcome",
+    "subtitle": "A powerful React/Redux application boilerplate"
   },
   "feature": {
-    "title": "feature page"
+    "title": "feature"
   },
   "features": {
     "title": "features"
+  },
+  "welcome": {
+    "title": "Welcome to our user section",
+    "subtitle": "An exclusive section for users only"
   }
 }

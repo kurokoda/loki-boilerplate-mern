@@ -6,6 +6,8 @@ import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import { HOME as ROUTE_CONFIG } from '../../../utils/route/config';
+import { localized } from '../../../utils/localization';
+
 import Loading from '../../loading';
 import { Well } from '../../shared';
 import Helmet from './helmet';
@@ -35,7 +37,8 @@ class HomePage extends Component {
   render() {
     const classes = HomePage.getClasses();
     const { localization } = this.props;
-    const title = localization.getIn(['home', 'title']).toUpperCase();
+    const title = localized(localization, ['home', 'title']).toUpperCase();
+    const subtitle = localized(localization, ['home', 'subtitle']).toUpperCase();
 
     return (
       <Fragment>
@@ -46,6 +49,7 @@ class HomePage extends Component {
             <Helmet />
             <Well>
               <h3 className={classes.header}>{title}</h3>
+              <h5 className={classes.header}>{subtitle}</h5>
               <p className={classes.text}>
                 Bacon ipsum dolor amet jowl picanha ground round ball tip
                 bresaola ham pork chop jerky ham hock doner leberkas frankfurter
@@ -147,8 +151,9 @@ HomePage.getStyles = () =>
 
 HomePage.propTypes = {
   /** Dispatches action to request page data */
-  fetchPageData: PropTypes.func.isRequired /** Localization text */,
-  localization: ImmutablePropTypes.map.isRequired /** Page data */,
+  fetchPageData: PropTypes.func.isRequired
+  /** Localization text */,
+  localization: ImmutablePropTypes.map.isRequired,
   pageData: ImmutablePropTypes.map
 };
 

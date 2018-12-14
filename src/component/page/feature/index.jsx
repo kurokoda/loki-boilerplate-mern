@@ -7,6 +7,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router';
 import { FEATURE as ROUTE_CONFIG } from '../../../utils/route/config';
+import { localized } from '../../../utils/localization';
 import Loading from '../../loading';
 import Helmet from './helmet';
 
@@ -33,7 +34,7 @@ class FeaturePage extends Component {
   render() {
     const classes = FeaturePage.getClasses();
     const { localization } = this.props;
-    const title = localization.getIn(['feature', 'title']).toUpperCase();
+    const title = localized(localization, ['feature', 'title']).toUpperCase();
 
     return (
       <Fragment>

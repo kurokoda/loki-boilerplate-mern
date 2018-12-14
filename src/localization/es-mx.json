@@ -10,15 +10,21 @@
     }
   },
   "about": {
-    "title": "Bienvenido a la pagina principal"
+    "title": "Sobre nosotros",
+    "subtitle": "De que se trata?"
   },
   "home": {
-    "title": "React/Redux repetitivo de aplicación"
+    "title": "Bienvenido",
+    "subtitle": "Una potente aplicación de React / Redux"
   },
   "feature": {
     "title": "característica"
   },
   "features": {
     "title": "características"
+  },
+  "welcome": {
+    "title": "Bienvenido a nuestra sección de usuarios",
+    "subtitle": "Una sección exclusiva solo para usuarios"
   }
 }
