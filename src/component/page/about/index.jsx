@@ -151,6 +151,29 @@ AboutPage.getClasses = () => {
   };
 };
 
+/**
+ * Dynamically generates styles
+ * @methodof AboutPage
+ * @returns {object} The class's styles
+ */
+AboutPage.getStyles = () =>
+    StyleSheet.create({
+      container: {
+        minHeight: 'calc(100vh-100px)',
+        padding: '0 40px 0 40px',
+        width: '100%'
+      },
+      header: {
+        color: style.about.color.headerText,
+        textTransform: 'uppercase'
+      },
+      text: {
+        color: style.about.color.text,
+        fontSize: '18px'
+      }
+    });
+
+
 AboutPage.propTypes = {
   /** Dispatches action to request page data */
   fetchPageData: PropTypes.func.isRequired,
@@ -163,28 +186,6 @@ AboutPage.propTypes = {
 AboutPage.defaultProps = {
   pageData: null
 };
-
-/**
- * Dynamically generates styles
- * @methodof AboutPage
- * @returns {object} The class's styles
- */
-AboutPage.getStyles = () =>
-  StyleSheet.create({
-    container: {
-      minHeight: 'calc(100vh-100px)',
-      padding: '0 40px 0 40px',
-      width: '100%'
-    },
-    header: {
-      color: style.about.color.headerText,
-      textTransform: 'uppercase'
-    },
-    text: {
-      color: style.about.color.text,
-      fontSize: '18px'
-    }
-  });
 
 export default withRouter(AboutPage);
 
