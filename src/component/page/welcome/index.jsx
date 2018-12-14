@@ -38,16 +38,40 @@ class WelcomePage extends Component {
           <Helmet />
           <Well>
             <h3 className={classes.header}>SECRET WELCOME PAGE</h3>
-            <h5 className={classes.text}>
-              A scalable react application foundation with a focus on
-              developer experience, performance, and best practices.
-            </h5>
-            <h5 className={classes.text}>
-              My goal was to move beyond the repetitive coding and copy-pasting involved in getting a full-fledged isomorphic web application running, in order to allow me to focus on the application-specific features. In other words, I wanted to get to the fun stuff as quickly as possible.
-            </h5>
-            <h5 className={classes.text}>
-              Food truck tbh art party yr. Gochujang crucifix palo santo, slow-carb hexagon flannel small batch neutra austin. Pok pok slow-carb quinoa, tbh occupy cronut bushwick. 3 wolf moon marfa vice live-edge. Schlitz bitters direct trade retro 8-bit lo-fi truffaut stumptown tacos banh mi kale chips knausgaard pop-up migas.
-            </h5>
+            <p className={classes.text}>
+              Bacon ipsum dolor amet jowl picanha ground round ball tip bresaola
+              ham pork chop jerky ham hock doner leberkas frankfurter kielbasa
+              porchetta tongue. Meatloaf tri-tip kielbasa, rump tail short loin
+              shankle leberkas pork ground round. Spare ribs pork picanha
+              boudin, andouille burgdoggen tongue fatback prosciutto tenderloin.
+              Pancetta tenderloin t-bone, chuck leberkas corned beef andouille
+              pastrami jerky bacon shank turkey prosciutto chicken. Filet mignon
+              picanha pork belly kevin shank kielbasa beef ribs tongue turducken
+              sirloin biltong salami short ribs.
+            </p>
+            <p className={classes.text}>
+              Meatloaf corned beef ground round shoulder ball tip fatback bacon
+              brisket jerky beef shankle. Boudin brisket buffalo, corned beef
+              beef pork meatloaf rump cupim shoulder prosciutto tail shankle
+              burgdoggen cow. Buffalo chicken ham, pastrami boudin burgdoggen
+              shankle t-bone. Buffalo tri-tip doner biltong beef sirloin.
+              Capicola porchetta beef ribs pig andouille pork loin bresaola rump
+              short ribs sirloin picanha swine. Pig shankle short loin,
+              burgdoggen alcatra porchetta shank swine meatloaf chicken ham
+              andouille. Sausage spare ribs bresaola meatball leberkas ribeye
+              t-bone capicola shankle pancetta beef ribs tenderloin brisket
+              alcatra.{' '}
+            </p>
+            <p className={classes.text}>
+              Cupim tenderloin porchetta ham hock meatloaf, spare ribs kielbasa
+              bresaola bacon turducken burgdoggen. Pork chop pig jowl,
+              prosciutto sausage drumstick shoulder leberkas beef ribs. Cow
+              capicola jowl, picanha kevin biltong porchetta ribeye beef chuck
+              bresaola kielbasa swine. Shoulder andouille ham pork belly, cupim
+              sirloin pork loin rump turducken kielbasa frankfurter porchetta
+              burgdoggen drumstick. Andouille biltong pork chop turducken rump
+              chicken boudin. Pork belly burgdoggen shankle andouille.
+            </p>
           </Well>
         </div>
       </Fragment>
@@ -71,21 +95,21 @@ WelcomePage.getClasses = () => {
  * @returns {object} The class's styles
  */
 WelcomePage.getStyles = () =>
-    StyleSheet.create({
-      container: {
-        minHeight: 'calc(100vh-100px)',
-        padding: '0 40px 0 40px',
-        width: '100%'
-      },
-      header: {
-        color: style.about.color.headerText,
-        textTransform: 'uppercase'
-      },
-      text: {
-        color: style.about.color.text,
-        fontSize: '18px'
-      }
-    });
+  StyleSheet.create({
+    container: {
+      minHeight: 'calc(100vh-100px)',
+      padding: '0 40px 0 40px',
+      width: '100%'
+    },
+    header: {
+      color: style.about.color.headerText,
+      textTransform: 'uppercase'
+    },
+    text: {
+      color: style.about.color.text,
+      fontSize: '18px'
+    }
+  });
 
 WelcomePage.propTypes = {
   user: ImmutablePropTypes.map.isRequired

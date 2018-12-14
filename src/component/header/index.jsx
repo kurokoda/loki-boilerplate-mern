@@ -94,11 +94,15 @@ class Header extends Component {
 
     if (route.api && route.api.pageData) {
       return () => {
-        fetchPageData(route.type, () => {
-          history.push(route.path);
-        }, () => {
-          history.push('/error');
-        });
+        fetchPageData(
+          route.type,
+          () => {
+            history.push(route.path);
+          },
+          () => {
+            history.push('/error');
+          }
+        );
       };
     } else {
       return () => {
@@ -196,9 +200,9 @@ class Header extends Component {
 
     modalShow({
       Content: () => (
-          <ModalContainer title="Sign Up Success" onClose={modalHide}>
-            Welcome to the secret welcome page
-          </ModalContainer>
+        <ModalContainer title="Sign Up Success" onClose={modalHide}>
+          Welcome to the secret welcome page
+        </ModalContainer>
       ),
       contentLabel: 'Sign In Form',
       onRequestClose: modalHide

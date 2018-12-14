@@ -51,21 +51,31 @@ class AboutPage extends Component {
               </h5>
               <br />
               <p className={classes.text}>
-                My goal was to move beyond the repetitive coding and
-                copy-pasting involved in getting a full-fledged isomorphic web
-                application running, in order to allow me to focus on the
-                application-specific features. In other words, I wanted to get
-                to the fun stuff as quickly as possible.
+                Bacon ipsum dolor amet jowl picanha ground round ball tip
+                bresaola ham pork chop jerky ham hock doner leberkas frankfurter
+                kielbasa porchetta tongue. Meatloaf tri-tip kielbasa, rump tail
+                short loin shankle leberkas pork ground round. Spare ribs pork
+                picanha boudin, andouille burgdoggen tongue fatback prosciutto
+                tenderloin. Pancetta tenderloin t-bone, chuck leberkas corned
+                beef andouille pastrami jerky bacon shank turkey prosciutto
+                chicken. Filet mignon picanha pork belly kevin shank kielbasa
+                beef ribs tongue turducken sirloin biltong salami short ribs.
               </p>
               <br />
-              <h5 className={classes.header}>Opiniated style rules</h5>
+              <h5 className={classes.header}>Opinionated style rules</h5>
               <br />
               <p className={classes.text}>
-                I chose to build this application base with simplicity in mind,
-                and with a highly opiniated development philosophy. Strict type
-                checking, linting, code formatting, along with simple and
-                consitent naming concepts and flat directory structures aim for
-                an application which is eash to navigate, and to develop.
+                Meatloaf corned beef ground round shoulder ball tip fatback
+                bacon brisket jerky beef shankle. Boudin brisket buffalo, corned
+                beef beef pork meatloaf rump cupim shoulder prosciutto tail
+                shankle burgdoggen cow. Buffalo chicken ham, pastrami boudin
+                burgdoggen shankle t-bone. Buffalo tri-tip doner biltong beef
+                sirloin. Capicola porchetta beef ribs pig andouille pork loin
+                bresaola rump short ribs sirloin picanha swine. Pig shankle
+                short loin, burgdoggen alcatra porchetta shank swine meatloaf
+                chicken ham andouille. Sausage spare ribs bresaola meatball
+                leberkas ribeye t-bone capicola shankle pancetta beef ribs
+                tenderloin brisket alcatra.
               </p>
               <br />
               <h5 className={classes.header}>
@@ -73,15 +83,15 @@ class AboutPage extends Component {
               </h5>
               <br />
               <p className={classes.text}>
-                Based on my own experience, most production web applications
-                have a larger minimum feature set than developers account for,
-                and nice-to-have features added further down the road tend to
-                suffer for having not been planned for from the beginning.
-                Analytics, localization, and dynamic themes are all examples of
-                this. I built this app with that idea in mind. While those
-                features may or may not be implemented, the design philosophies
-                of separation of concerns and the benefits of having centralized
-                data sources are universal.
+                Cupim tenderloin porchetta ham hock meatloaf, spare ribs
+                kielbasa bresaola bacon turducken burgdoggen. Pork chop pig
+                jowl, prosciutto sausage drumstick shoulder leberkas beef ribs.
+                Cow capicola jowl, picanha kevin biltong porchetta ribeye beef
+                chuck bresaola kielbasa swine. Shoulder andouille ham pork
+                belly, cupim sirloin pork loin rump turducken kielbasa
+                frankfurter porchetta burgdoggen drumstick. Andouille biltong
+                pork chop turducken rump chicken boudin. Pork belly burgdoggen
+                shankle andouille.
               </p>
               <br />
               <h5 className={classes.header}>
@@ -89,12 +99,14 @@ class AboutPage extends Component {
               </h5>
               <br />
               <p className={classes.text}>
-                Like all developers, at the end of the day, I wanted to build a
-                good tool. Not just a demo, but something that I could use in
-                the future, to build other tools. And I wanted that tool to
-                benefit as many people as possible; I hope that in the long run,
-                this tool will benefit not only my own projects, but other
-                developers as well.
+                Kevin jowl meatloaf tongue, kielbasa prosciutto picanha pork
+                leberkas short loin sausage salami short ribs flank chuck.
+                Fatback pig sausage sirloin salami andouille burgdoggen rump
+                strip steak spare ribs pork hamburger kielbasa. Jerky beef tail
+                ham hock fatback leberkas tri-tip cow t-bone cupim spare ribs
+                drumstick ham corned beef shoulder. Ball tip jerky pork loin
+                sausage burgdoggen, beef fatback. Kielbasa ham biltong hamburger
+                burgdoggen boudin pancetta rump buffalo.
               </p>
               <br />
             </Well>
