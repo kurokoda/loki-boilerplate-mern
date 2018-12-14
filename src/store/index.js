@@ -14,7 +14,7 @@ import {
   googleTagManagerEventsMap
 } from '../actions/analytics';
 import CONFIG from '../config';
-import reducers from '../reducers/index';
+import getReducers from '../reducers/index';
 import { isBrowserEnvironment } from '../utils/isomorphic';
 
 const googleAnalyticsMiddleWare = createMiddleware(
@@ -38,6 +38,7 @@ const configureStore = (url = '/') => {
     ? createMemoryHistory({ initialEntries: [url] })
     : createBrowserHistory();
 
+  const reducers = getReducers(history);
   const enhancers = [];
   let initialState = {};
   let persistor;
