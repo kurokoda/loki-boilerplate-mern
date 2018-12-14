@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import style from '../../../../config/style';
+import style from '../../../../theme';
 
 class Feature extends Component {
   /**

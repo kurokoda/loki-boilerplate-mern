@@ -9,7 +9,7 @@ import Footer from '../../container/footer';
 import Header from '../../container/header';
 import Subheader from '../../component/subheader';
 import Helmet from './helmet';
-import style from '../../config/style';
+import style from '../../theme';
 
 /**
  * This is the top-level application component. It acts as the root of the component tree

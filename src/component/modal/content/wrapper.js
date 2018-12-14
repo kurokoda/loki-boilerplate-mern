@@ -1,6 +1,6 @@
 import { css, StyleSheet } from 'aphrodite';
 import React from 'react';
-import style from '../../../config/style';
+import style from '../../../theme';
 
 const WrapperBasic = ({ children, onClose, title }) => {
   const classes = WrapperBasic.getClasses();

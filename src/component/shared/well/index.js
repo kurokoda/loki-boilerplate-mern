@@ -4,7 +4,7 @@ import { css, StyleSheet } from 'aphrodite';
 import React, { Component, Fragment} from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import style from '../../../config/style';
+import style from '../../../theme';
 
 class Well extends Component {
   /**

@@ -3,7 +3,7 @@
 import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import ReactModal from 'react-modal';
-import style from '../../config/style';
+import style from '../../theme';
 
 ReactModal.setAppElement('#root');
 

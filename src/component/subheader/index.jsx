@@ -1,6 +1,6 @@
 import { css, StyleSheet } from 'aphrodite';
 import React from 'react';
-import style from '../../config/style';
+import style from '../../theme';
 import Image from '../../assets/images/subheader/tinyorange.jpg';
 /**
  * The application Subheader component. Contains page links.

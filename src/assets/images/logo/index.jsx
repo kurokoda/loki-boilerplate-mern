@@ -3,7 +3,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import style from '../../../config/style';
+import style from '../../../theme';
 
 /**
  * This is the top-level application component. It acts as the root of the component tree

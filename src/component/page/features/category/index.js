@@ -6,7 +6,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import Feature from '../feature';
 import { Well } from '../../../shared';
-import style from '../../../../config/style';
+import style from '../../../../theme';
 
 class Category extends Component {
   /**

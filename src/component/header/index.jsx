@@ -4,7 +4,7 @@ import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import style from '../../config/style';
+import style from '../../theme';
 import { getIncrementedElementName } from '../../utils/collection';
 import { localized } from '../../utils/localization';
 import { ROUTES } from '../../utils/route';

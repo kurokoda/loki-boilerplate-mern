@@ -10,7 +10,7 @@ import { localized } from '../../../utils/localization';
 import Loading from '../../loading';
 import { Well } from '../../shared';
 import Helmet from './helmet';
-import style from '../../../config/style';
+import style from '../../../theme';
 
 class AboutPage extends Component {
   /**

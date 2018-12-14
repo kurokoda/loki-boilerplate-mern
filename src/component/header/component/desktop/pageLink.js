@@ -3,7 +3,7 @@ import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import { getIncrementedElementName } from '../../../../utils/collection/index';
-import style from '../../../../config/style';
+import style from '../../../../theme';
 
 const PageLink = ({ callback, children, route }) => {
   const classes = PageLink.getClasses();

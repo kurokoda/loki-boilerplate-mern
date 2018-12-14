@@ -6,7 +6,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Redirect, withRouter } from 'react-router';
 import { Well } from '../../shared';
 import Helmet from './helmet';
-import style from '../../../config/style';
+import style from '../../../theme';
 import { localized } from '../../../utils/localization';
 
 class WelcomePage extends Component {

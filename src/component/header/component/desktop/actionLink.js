@@ -1,7 +1,7 @@
 import { css, StyleSheet } from 'aphrodite';
 import React from 'react';
 import PropTypes from 'prop-types';
-import style from '../../../../config/style';
+import style from '../../../../theme';
 
 const ActionLink = ({ children, callback }) => {
   const classes = ActionLink.getClasses();
