@@ -24,3 +24,33 @@ body {
 div:focus {
   outline: none;
 }
+
+.pageFade-enter {
+  opacity: 0.01;
+}
+.pageFade-enter.pageFade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+.pageFade-exit {
+  opacity: 1;
+}
+
+.pageFade-exit.pageFade-exit-active {
+  opacity: 0.01;
+  transition: opacity 300ms;
+}
+
+/* The following is described in the tutorial as being necessary, but it seems to work? */
+/* https://medium.com/@khwsc1/step-by-step-guide-of-simple-routing-transition-effect-for-react-with-react-router-v4-and-9152db1566a0 */
+
+/*div.transition-group {*/
+  /*position: relative;*/
+/*}*/
+
+/*section.route-section {*/
+ /*position: absolute;*/
+ /*width: 100%;*/
+ /*top: 0;*/
+ /*left: 0;*/
+/*}*/
