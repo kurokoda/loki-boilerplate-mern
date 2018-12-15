@@ -7,11 +7,14 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router';
 import { FEATURE as ROUTE_CONFIG } from '../../../utils/route/config';
-import { localized } from '../../../utils/localization';
+import { localize } from '../../../utils/strings';
 import Loading from '../../loading';
 import Helmet from './helmet';
+import { ApplicationContext } from '../../../context/application';
 
 class FeaturePage extends Component {
+  static contextType = ApplicationContext;
+
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -27,14 +30,13 @@ class FeaturePage extends Component {
    */
   componentDidMount() {
     !this.hasPageData && this.fetchPageData();
-
     window.scrollTo(0, 0);
   }
 
   render() {
+    const strings = this.context.strings;
     const classes = FeaturePage.getClasses();
-    const { localization } = this.props;
-    const title = localized(localization, ['feature', 'title']).toUpperCase();
+    const title = localize(strings, ['feature', 'title']).toUpperCase();
 
     return (
       <Fragment>
@@ -88,8 +90,6 @@ FeaturePage.propTypes = {
   fetchPageData: PropTypes.func.isRequired,
   /** The application's routing history */
   history: ReactRouterPropTypes.history.isRequired,
-  /** Localization text */
-  localization: ImmutablePropTypes.map.isRequired,
   /** Page data */
   pageData: ImmutablePropTypes.map
 };

@@ -13,6 +13,7 @@ import { hydrateLocalizationData } from '../src/actions/localization';
 import App from '../src/component/app/index';
 import createStore from '../src/store/index';
 import { getConfigForRoute, getPageDataForRoute } from '../src/utils/route';
+import { ApplicationProvider } from '../src/context/application';
 
 /**
  * Determine the appropriate data url based on the request's url;
@@ -164,17 +165,20 @@ const render = (req, res, pageData, pageType) => {
   });
 };
 
-const serverRender = (modules, store, req, context) =>
-  frontloadServerRender(() =>
-    StyleSheetServer.renderStatic(() =>
-      renderToString(
-        <Provider store={store}>
-          <StaticRouter location={req.url} context={context}>
-            <Frontload isServer>
+const serverRender = (modules, store, req, context) => {
+  const applicationContext = {
+    strings: store.getState().localization,
+    theme: store.getState().theme
+  };
+
+  return frontloadServerRender(
+      () => StyleSheetServer.renderStatic(() => renderToString(<Provider store={store}>
+        <StaticRouter location={req.url} context={context}>
+          <Frontload isServer>
+            <ApplicationProvider value={applicationContext}>
               <App />
-            </Frontload>
-          </StaticRouter>
-        </Provider>
-      )
-    )
-  );
+            </ApplicationProvider>
+          </Frontload>
+        </StaticRouter>
+      </Provider>)));
+}

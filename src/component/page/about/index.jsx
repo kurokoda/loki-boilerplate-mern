@@ -6,13 +6,16 @@ import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import { ABOUT as ROUTE_CONFIG } from '../../../utils/route/config';
-import { localized } from '../../../utils/localization';
+import { localize } from '../../../utils/strings';
 import Loading from '../../loading';
 import Well from '../../well';
 import Helmet from './helmet';
 import style from '../../../theme';
+import { ApplicationContext } from '../../../context/application';
 
 class AboutPage extends Component {
+  static contextType = ApplicationContext;
+
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -32,9 +35,13 @@ class AboutPage extends Component {
   }
 
   render() {
+    const strings = this.context.strings;
     const classes = AboutPage.getClasses();
-    const { localization } = this.props;
-    const title = localized(localization, ['about', 'title']).toUpperCase();
+    const title = localize(strings, ['about', 'title']).toUpperCase();
+    const paragraphOne = localize(strings, ['about', 'paragraphOne']);
+    const paragraphTwo = localize(strings, ['about', 'paragraphTwo']);
+    const paragraphThree = localize(strings, ['about', 'paragraphThree']);
+    const paragraphFour = localize(strings, ['about', 'paragraphFour']);
 
     return (
       <Fragment>
@@ -52,31 +59,13 @@ class AboutPage extends Component {
               </h5>
               <br />
               <p className={classes.text}>
-                Bacon ipsum dolor amet jowl picanha ground round ball tip
-                bresaola ham pork chop jerky ham hock doner leberkas frankfurter
-                kielbasa porchetta tongue. Meatloaf tri-tip kielbasa, rump tail
-                short loin shankle leberkas pork ground round. Spare ribs pork
-                picanha boudin, andouille burgdoggen tongue fatback prosciutto
-                tenderloin. Pancetta tenderloin t-bone, chuck leberkas corned
-                beef andouille pastrami jerky bacon shank turkey prosciutto
-                chicken. Filet mignon picanha pork belly kevin shank kielbasa
-                beef ribs tongue turducken sirloin biltong salami short ribs.
+                {paragraphOne}
               </p>
               <br />
               <h5 className={classes.header}>Opinionated style rules</h5>
               <br />
               <p className={classes.text}>
-                Meatloaf corned beef ground round shoulder ball tip fatback
-                bacon brisket jerky beef shankle. Boudin brisket buffalo, corned
-                beef beef pork meatloaf rump cupim shoulder prosciutto tail
-                shankle burgdoggen cow. Buffalo chicken ham, pastrami boudin
-                burgdoggen shankle t-bone. Buffalo tri-tip doner biltong beef
-                sirloin. Capicola porchetta beef ribs pig andouille pork loin
-                bresaola rump short ribs sirloin picanha swine. Pig shankle
-                short loin, burgdoggen alcatra porchetta shank swine meatloaf
-                chicken ham andouille. Sausage spare ribs bresaola meatball
-                leberkas ribeye t-bone capicola shankle pancetta beef ribs
-                tenderloin brisket alcatra.
+                {paragraphTwo}
               </p>
               <br />
               <h5 className={classes.header}>
@@ -84,15 +73,7 @@ class AboutPage extends Component {
               </h5>
               <br />
               <p className={classes.text}>
-                Cupim tenderloin porchetta ham hock meatloaf, spare ribs
-                kielbasa bresaola bacon turducken burgdoggen. Pork chop pig
-                jowl, prosciutto sausage drumstick shoulder leberkas beef ribs.
-                Cow capicola jowl, picanha kevin biltong porchetta ribeye beef
-                chuck bresaola kielbasa swine. Shoulder andouille ham pork
-                belly, cupim sirloin pork loin rump turducken kielbasa
-                frankfurter porchetta burgdoggen drumstick. Andouille biltong
-                pork chop turducken rump chicken boudin. Pork belly burgdoggen
-                shankle andouille.
+                {paragraphThree}
               </p>
               <br />
               <h5 className={classes.header}>
@@ -100,14 +81,7 @@ class AboutPage extends Component {
               </h5>
               <br />
               <p className={classes.text}>
-                Kevin jowl meatloaf tongue, kielbasa prosciutto picanha pork
-                leberkas short loin sausage salami short ribs flank chuck.
-                Fatback pig sausage sirloin salami andouille burgdoggen rump
-                strip steak spare ribs pork hamburger kielbasa. Jerky beef tail
-                ham hock fatback leberkas tri-tip cow t-bone cupim spare ribs
-                drumstick ham corned beef shoulder. Ball tip jerky pork loin
-                sausage burgdoggen, beef fatback. Kielbasa ham biltong hamburger
-                burgdoggen boudin pancetta rump buffalo.
+                {paragraphFour}
               </p>
               <br />
             </Well>
@@ -178,8 +152,6 @@ AboutPage.getStyles = () =>
 AboutPage.propTypes = {
   /** Dispatches action to request page data */
   fetchPageData: PropTypes.func.isRequired,
-  /** Localization text */
-  localization: ImmutablePropTypes.map.isRequired,
   /** Page data */
   pageData: ImmutablePropTypes.map
 };

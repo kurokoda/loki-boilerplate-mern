@@ -4,9 +4,8 @@ import {
 } from '../../../actions/page';
 import { HomePage } from '../../../component/page';
 
-export function mapStateToProps({ pageData, localization }) {
+export function mapStateToProps({ pageData }) {
   return {
-    localization,
     pageData
   };
 }

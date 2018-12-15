@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { WelcomePage } from '../../../component/page';
 
-export function mapStateToProps({ localization, user }) {
-  return { localization,  user };
+export function mapStateToProps({ user }) {
+  return { user };
 }
 
 export function mapDispatchToProps(dispatch) {

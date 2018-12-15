@@ -7,9 +7,11 @@ import { Redirect, withRouter } from 'react-router';
 import Well from '../../well';
 import Helmet from './helmet';
 import style from '../../../theme';
-import { localized } from '../../../utils/localization';
+import { localize } from '../../../utils/strings';
+import { ApplicationContext } from '../../../context/application';
 
 class WelcomePage extends Component {
+  static contextType = ApplicationContext;
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -28,10 +30,11 @@ class WelcomePage extends Component {
   }
 
   render() {
+    const strings = this.context.strings;
     const classes = WelcomePage.getClasses();
-    const { localization, user } = this.props;
-    const title = localized(localization, ['home', 'title']).toUpperCase();
-    const subtitle = localized(localization, ['home', 'subtitle']).toUpperCase();
+    const { user } = this.props;
+    const title = localize(strings, ['home', 'title']).toUpperCase();
+    const subtitle = localize(strings, ['home', 'subtitle']).toUpperCase();
     return (
       <Fragment>
         {// Redirect if there is no user

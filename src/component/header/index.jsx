@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import style from '../../theme';
 import { getIncrementedElementName } from '../../utils/collection';
-import { localized } from '../../utils/localization';
+import { localize } from '../../utils/strings';
 import { ROUTES } from '../../utils/route';
 import SignInForm from '../form/signIn';
 import SignUpForm from '../form/signUp';
@@ -14,11 +14,15 @@ import ActionLink from './component/desktop/actionLink';
 import LogoLink from './component/desktop/logoLink';
 import PageLink from './component/desktop/pageLink';
 import ModalContainer from '../modal/content/wrapper';
+import { ApplicationContext } from '../../context/application';
+
 /**
  * The application header component. Contains page links.
  * @return {XML} A header component
  */
 class Header extends Component {
+  static contextType = ApplicationContext;
+
   componentDidMount() {
     const { history } = this.props;
     history.listen(() => {
@@ -28,7 +32,8 @@ class Header extends Component {
   }
 
   render() {
-    const { localization, signOut, user } = this.props;
+    const { signOut, user } = this.props;
+    const strings = this.context.strings;
     const classes = Header.getClasses({ style });
 
     return (
@@ -50,7 +55,7 @@ class Header extends Component {
                     key={getIncrementedElementName('desktopPageLink')}
                     route={route}
                   >
-                    {localized(localization, ['header', 'links', route.camelCaseKey]).toUpperCase()}
+                    {localize(strings, ['header', 'links', route.camelCaseKey]).toUpperCase()}
                   </PageLink>
                 );
               }
@@ -60,16 +65,16 @@ class Header extends Component {
               {!user && (
                 <Fragment>
                   <ActionLink callback={this.signIn}>
-                    {localized(localization, ['header', 'links', 'signIn']).toUpperCase()}
+                    {localize(strings, ['header', 'links', 'signIn']).toUpperCase()}
                   </ActionLink>
                   <ActionLink callback={this.signUp}>
-                    {localized(localization, ['header', 'links', 'signUp']).toUpperCase()}
+                    {localize(strings, ['header', 'links', 'signUp']).toUpperCase()}
                   </ActionLink>
                 </Fragment>
               )}
               {user && (
                 <ActionLink callback={signOut}>
-                  {localized(localization, ['header', 'links', 'signOut']).toUpperCase()}
+                  {localize(strings, ['header', 'links', 'signOut']).toUpperCase()}
                 </ActionLink>
               )}
             </div>
@@ -219,8 +224,6 @@ export default withRouter(Header);
 Header.propTypes = {
   /** The application router's history */
   history: ReactRouterPropTypes.history.isRequired,
-  /** The application localization config */
-  localization: ImmutablePropTypes.map.isRequired,
   /** The application hide modal action */
   modalHide: PropTypes.func.isRequired,
   /** The application show modal action */

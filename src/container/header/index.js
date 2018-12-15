@@ -4,8 +4,8 @@ import Header from '../../component/header';
 import { modalHide, modalShow } from '../../actions/modal';
 import { fetchPageData } from '../../actions/page';
 
-export function mapStateToProps({ localization, user }) {
-  return { localization, user };
+export function mapStateToProps({ user }) {
+  return { user };
 }
 
 export function mapDispatchToProps(dispatch) {

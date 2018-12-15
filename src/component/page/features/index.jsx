@@ -6,13 +6,16 @@ import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import { FEATURES as ROUTE_CONFIG } from '../../../utils/route/config';
-import { localized } from '../../../utils/localization';
+import { localize } from '../../../utils/strings';
 
 import Loading from '../../loading';
 import Helmet from './helmet';
 import Category from './category';
+import { ApplicationContext } from '../../../context/application';
 
 class FeaturesPage extends Component {
+  static contextType = ApplicationContext;
+
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -28,14 +31,14 @@ class FeaturesPage extends Component {
    */
   componentDidMount() {
     !this.hasPageData && this.fetchPageData();
-
     window.scrollTo(0, 0);
   }
 
   render() {
+    const strings = this.context.strings;
     const classes = FeaturesPage.getClasses();
-    const { localization, pageData } = this.props;
-    const title = localized(localization, ['features', 'title']).toUpperCase();
+    const { pageData } = this.props;
+    const title = localize(strings, ['features', 'title']).toUpperCase();
 
     let categories;
 
@@ -96,8 +99,6 @@ FeaturesPage.getClasses = () => {
 FeaturesPage.propTypes = {
   /** Dispatches action to request page data */
   fetchPageData: PropTypes.func.isRequired,
-  /** Localization text */
-  localization: ImmutablePropTypes.map.isRequired,
   /** Page data */
   pageData: ImmutablePropTypes.map
 };

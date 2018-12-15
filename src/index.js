@@ -11,26 +11,37 @@ import App from './container/app';
 import './index.css';
 import localizationData from './localization/en-us.json';
 import createStore from './store';
+import { ApplicationProvider } from './context/application';
 
 const { store, history, persistor } = createStore();
 const root = document.querySelector('#root');
+
+if (!store.getState().localization) {
+  const stringifiedLocalizationData = JSON.stringify(localizationData);
+  store.dispatch(hydrateLocalizationData(stringifiedLocalizationData));
+  console.log('Force hydrating localization data', localizationData)
+}
+
+const applicationContext = {
+  strings: store.getState().localization,
+  theme: store.getState().theme
+};
+
+console.log('strings', store.getState().localization)
 
 const Application = (
   <Provider store={store}>
     <PersistGate loading={<Loading />} persistor={persistor}>
       <ConnectedRouter history={history}>
         <Frontload noServerRender>
-          <App />
+          <ApplicationProvider value={applicationContext}>
+            <App />
+          </ApplicationProvider>
         </Frontload>
       </ConnectedRouter>
     </PersistGate>
   </Provider>
 );
-
-if (!store.getState().localization) {
-  const stringifiedLocalizationData = JSON.stringify(localizationData);
-  store.dispatch(hydrateLocalizationData(stringifiedLocalizationData));
-}
 
 StyleSheet.rehydrate(window.renderedClassNames);
 
