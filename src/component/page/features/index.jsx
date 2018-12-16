@@ -11,9 +11,13 @@ import Loading from '../../loading';
 import Helmet from './helmet';
 import Category from './category';
 import { ApplicationContext } from '../../../context/application';
+import Well from '../../well';
 
 class FeaturesPage extends Component {
   static contextType = ApplicationContext;
+
+  connectionAttemptsAllowed = 5;
+  connectionAttempts = 0;
 
   /**
    * Controls updates and rendering
@@ -53,10 +57,12 @@ class FeaturesPage extends Component {
         this.hasPageData && (
           <div id="features-page" className={classes.container}>
             <Helmet />
-            <h3>{title}</h3>
+            <h3 className={classes.header}>{title}</h3>
+            <Well>
             {categories.map(category => (
               <Category category={category} key={category.get('name')} />
             ))}
+            </Well>
           </div>
         )}
         {// Browser or server render without data:
@@ -80,7 +86,16 @@ class FeaturesPage extends Component {
 
   onFetchPageDataSuccess = () => {}; // tslint:disable-line:no-empty
 
-  onFetchPageDataError = error => {}; // tslint:disable-line:no-empty
+  onFetchPageDataError = error => {
+    if (this.connectionAttempts < this.connectionAttemptsAllowed){
+      setTimeout(()=>{
+        this.fetchPageData()
+        this.connectionattempts++;
+      }, 2000)
+    } else {
+      // notify loading complete
+    }
+  };
 
   get hasPageData() {
     const { pageData } = this.props;
@@ -92,9 +107,24 @@ FeaturesPage.getClasses = config => {
   const styles = FeaturesPage.getStyles(config);
 
   return {
-    container: css(styles.container)
+    container: css(styles.container),
+    header: css(styles.header)
   };
 };
+
+FeaturesPage.getStyles = config =>
+    StyleSheet.create({
+      container: {
+        minHeight: 'calc(100vh-100px)',
+        padding: '0 40px 0 40px',
+        width: '100%'
+      },
+      header: {
+        color: config.theme.getIn(['app', 'color', 'headerText']),
+        textTransform: 'uppercase'
+      },
+    });
+
 
 FeaturesPage.propTypes = {
   /** Dispatches action to request page data */
@@ -106,20 +136,6 @@ FeaturesPage.propTypes = {
 FeaturesPage.defaultProps = {
   pageData: null
 };
-
-/**
- * Dynamically generates styles
- * @methodof FeaturesPage
- * @returns {object} The class's styles
- */
-FeaturesPage.getStyles = config =>
-  StyleSheet.create({
-    container: {
-      minHeight: 'calc(100vh-100px)',
-      padding: '0 40px 0 40px',
-      width: '100%'
-    }
-  });
 
 export default withRouter(FeaturesPage);
 

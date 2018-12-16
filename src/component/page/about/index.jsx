@@ -15,6 +15,9 @@ import { ApplicationContext } from '../../../context/application';
 class AboutPage extends Component {
   static contextType = ApplicationContext;
 
+  connectionAttemptsAllowed = 5;
+  connectionAttempts = 0;
+
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -100,7 +103,16 @@ class AboutPage extends Component {
 
   onFetchPageDataSuccess = () => {}; // tslint:disable-line:no-empty
 
-  onFetchPageDataError = error => {}; // tslint:disable-line:no-empty
+  onFetchPageDataError = error => {
+    if (this.connectionAttempts < this.connectionAttemptsAllowed){
+      setTimeout(()=>{
+        this.fetchPageData()
+        this.connectionattempts++;
+      }, 2000)
+    } else {
+      // notify loading complete
+    }
+  };
 
   get hasPageData() {
     const { pageData } = this.props;

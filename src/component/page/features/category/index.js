@@ -5,7 +5,6 @@ import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import Feature from '../feature';
-import Well from '../../../well';
 import { ApplicationContext } from '../../../../context/application';
 
 class Category extends Component {
@@ -29,12 +28,10 @@ class Category extends Component {
 
     return (
       <Fragment>
-        <Well>
           <h3 className={classes.name}>{name}</h3>
           {features.map(feature => (
             <Feature feature={feature} key={feature.get('id')} />
           ))}
-        </Well>
       </Fragment>
     );
   }

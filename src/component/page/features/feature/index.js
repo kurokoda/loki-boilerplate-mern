@@ -54,11 +54,11 @@ Feature.propTypes = {
 Feature.getStyles = config =>
   StyleSheet.create({
     container: {
-      borderRadius: '8px',
+      borderRadius: '4px',
       backgroundColor: config.implemented
         ? config.theme.getIn(['feature', 'color', 'activeBackground'])
         : config.theme.getIn(['feature', 'color', 'inactiveBackground']),
-      color: config.theme.getIn(['feature', 'color', 'text']),
+      color: config.theme.getIn(['feature', 'color', 'inactiveBackground']),
       minHeight: '40px',
       padding: '10px 10px 10px 10px',
       margin: '10px 10px 10px 10px',
