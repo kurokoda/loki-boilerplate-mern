@@ -10,14 +10,15 @@ export function mapStateToProps({ user }) {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    fetchPageData : (type, onSuccess, onError) => dispatch(fetchPageData(type, onSuccess, onError)),
+    fetchPageData: (type, onSuccess, onError) =>
+      dispatch(fetchPageData(type, onSuccess, onError)),
     modalHide: payload => dispatch(modalHide()),
     modalShow: payload => dispatch(modalShow(payload)),
     signIn: (props, onSuccess, onError) =>
       dispatch(signIn(props, onSuccess, onError)),
     signOut: () => dispatch(signOut()),
     signUp: (props, onSuccess, onError) =>
-        dispatch(signUp(props, onSuccess, onError))
+      dispatch(signUp(props, onSuccess, onError))
   };
 }
 

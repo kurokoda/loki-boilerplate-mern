@@ -1,11 +1,15 @@
 import { css, StyleSheet } from 'aphrodite';
 import React, { Component } from 'react';
 import Logo from '../../assets/images/logo';
+import { ApplicationContext } from '../../context/application';
+
 /**
  * A loading indication which displays the company logo
  * @returns {xml} The Loading component
  */
 class Loading extends Component {
+  static contextType = ApplicationContext;
+
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -16,9 +20,13 @@ class Loading extends Component {
   }
 
   render() {
+    const { theme } = this.context;
+
+    console.log(this.context);
+
     return (
       <div id="loading" className={css(styles.loading)}>
-        <Logo size={200} />
+        <div>LOADING</div>
       </div>
     );
   }

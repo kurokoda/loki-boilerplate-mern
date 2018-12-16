@@ -3,12 +3,15 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import Logo from '../../assets/images/logo';
 import CONFIG from '../../config';
+import { ApplicationContext } from '../../context/application';
 
 /**
  * The application footer component. Contains links and legal information
  */
 
 class Footer extends Component {
+  static contextType = ApplicationContext;
+
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -19,11 +22,17 @@ class Footer extends Component {
   }
 
   render() {
+    const { theme } = this.context;
+
     return (
       <div id="footer" className={css(styles.footer)}>
         <div id="footer__logo-container" className={css(styles.container)}>
           <div className={css(styles.socialContainer)}>
-            <Logo size={50} backgroundColor="#000" />
+            <Logo
+              foreground={theme.getIn(['app', 'color', 'logo'])}
+              background={theme.getIn(['footer', 'color', 'background'])}
+              size={50}
+            />
             <div
               id="footer__logo-container__socialMediaIcons"
               className={css(styles.socialMediaIconContainer)}

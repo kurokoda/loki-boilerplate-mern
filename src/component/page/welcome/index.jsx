@@ -6,7 +6,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Redirect, withRouter } from 'react-router';
 import Well from '../../well';
 import Helmet from './helmet';
-import style from '../../../theme';
 import { localize } from '../../../utils/strings';
 import { ApplicationContext } from '../../../context/application';
 
@@ -31,7 +30,8 @@ class WelcomePage extends Component {
 
   render() {
     const strings = this.context.strings;
-    const classes = WelcomePage.getClasses();
+    const theme = this.context.theme;
+    const classes = WelcomePage.getClasses({ theme });
     const { user } = this.props;
     const title = localize(strings, ['welcome', 'title']).toUpperCase();
     const subtitle = localize(strings, ['welcome', 'subtitle']).toUpperCase();
@@ -49,21 +49,13 @@ class WelcomePage extends Component {
           <Well>
             <h3 className={classes.header}>{title}</h3>
             <h5 className={classes.header}>{subtitle}</h5>
-            <p className={classes.text}>
-              {paragraphOne}
-            </p>
+            <p className={classes.text}>{paragraphOne}</p>
             <br />
-            <p className={classes.text}>
-              {paragraphTwo}
-            </p>
+            <p className={classes.text}>{paragraphTwo}</p>
             <br />
-            <p className={classes.text}>
-              {paragraphThree}
-            </p>
+            <p className={classes.text}>{paragraphThree}</p>
             <br />
-            <p className={classes.text}>
-              {paragraphFour}
-            </p>
+            <p className={classes.text}>{paragraphFour}</p>
             <br />
           </Well>
         </div>
@@ -72,8 +64,8 @@ class WelcomePage extends Component {
   }
 }
 
-WelcomePage.getClasses = () => {
-  const styles = WelcomePage.getStyles();
+WelcomePage.getClasses = config => {
+  const styles = WelcomePage.getStyles(config);
 
   return {
     container: css(styles.container),
@@ -87,7 +79,7 @@ WelcomePage.getClasses = () => {
  * @methodof HomePage
  * @returns {object} The class's styles
  */
-WelcomePage.getStyles = () =>
+WelcomePage.getStyles = config =>
   StyleSheet.create({
     container: {
       minHeight: 'calc(100vh-100px)',
@@ -95,12 +87,12 @@ WelcomePage.getStyles = () =>
       width: '100%'
     },
     header: {
-      color: style.about.color.headerText,
+      color: config.theme.getIn(['app', 'color', 'headerText']),
       textTransform: 'uppercase'
     },
     text: {
-      color: style.about.color.text,
-      fontSize: '18px'
+      color: config.theme.getIn(['app', 'color', 'text']),
+      fontSize: config.theme.getIn(['app', 'fontSize', 'primary'])
     }
   });
 

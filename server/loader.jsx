@@ -8,12 +8,15 @@ import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import manifest from '../build/asset-manifest.json';
+import { hydrateThemeData } from '../src/actions/theme';
 import { hydratePageData } from '../src/actions/page';
 import { hydrateLocalizationData } from '../src/actions/localization';
 import App from '../src/component/app/index';
 import createStore from '../src/store/index';
 import { getConfigForRoute, getPageDataForRoute } from '../src/utils/route';
 import { ApplicationProvider } from '../src/context/application';
+
+import theme from '../src/theme/light'
 
 /**
  * Determine the appropriate data url based on the request's url;
@@ -148,6 +151,7 @@ const render = (req, res, pageData, pageType) => {
     const language = process.env.KLAW_LOCALIZATION || 'en-us';
     const buildLanguagePath = `../src/localization/${language}.json`;
     const languagePath = path.resolve(__dirname, buildLanguagePath);
+
     return fs.readFile(
       languagePath,
       'utf8',
@@ -156,6 +160,7 @@ const render = (req, res, pageData, pageType) => {
           return res.status(404).end();
         }
         store.dispatch(hydratePageData(pageType, pageData));
+        store.dispatch(hydrateThemeData(theme));
         store.dispatch(hydrateLocalizationData(localizationData));
         return serverRender(modules, store, req, context).then(result => {
           injectRouteContent(result, context, res, modules, htmlData, store);

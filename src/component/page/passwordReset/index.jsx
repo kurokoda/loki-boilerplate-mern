@@ -71,8 +71,9 @@ class ResetPasswordPage extends React.Component {
       },
       method: 'post'
     })
-      .then(res =>
-        res.ok ? Promise.resolve(res.json()) : Promise.reject(res.status)
+      .then(
+        res =>
+          res.ok ? Promise.resolve(res.json()) : Promise.reject(res.status)
       )
       .then(payload => {
         this.onResetPasswordSuccess(payload);

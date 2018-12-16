@@ -2,22 +2,33 @@ import { css, StyleSheet } from 'aphrodite';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Logo from '../../../../assets/images/logo/index';
+import { ApplicationContext } from '../../../../context/application';
 
-const LogoLink = ({ callback }) => {
-  const classes = LogoLink.getClasses();
-  return (
-    <div
-      id="header__links-container-logo-container"
-      className={classes.logoContainer}
-      onClick={callback}
-      onKeyDown={callback}
-      role="link"
-      tabIndex={0}
-    >
-      <Logo size={50} />
-    </div>
-  );
-};
+class LogoLink extends Component {
+  static contextType = ApplicationContext;
+
+  render() {
+    const { callback } = this.props;
+    const { theme } = this.context;
+    const classes = LogoLink.getClasses();
+    return (
+      <div
+        id="header__links-container-logo-container"
+        className={classes.logoContainer}
+        onClick={callback}
+        onKeyDown={callback}
+        role="link"
+        tabIndex={0}
+      >
+        <Logo
+          background={theme.getIn(['header', 'color', 'background'])}
+          foreground={theme.getIn(['app', 'color', 'logo'])}
+          size={50}
+        />
+      </div>
+    );
+  }
+}
 
 export default LogoLink;
 

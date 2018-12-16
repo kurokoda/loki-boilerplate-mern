@@ -17,4 +17,3 @@ export const PasswordResetPage = PasswordReset;
 export const WelcomePage = Welcome;
 
 // TODO add underscore naming convention
-

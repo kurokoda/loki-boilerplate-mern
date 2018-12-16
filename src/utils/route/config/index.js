@@ -6,7 +6,6 @@ import PasswordResetContainer from '../../../container/page/passwordReset';
 import PasswordRequestContainer from '../../../container/page/passwordRequest';
 import WelcomeContainer from '../../../container/page/welcome';
 
-
 export const ABOUT = {
   api: {
     pageData: '/api/page/about'

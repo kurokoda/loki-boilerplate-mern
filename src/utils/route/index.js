@@ -12,7 +12,7 @@ export const ROUTES = [
 ];
 
 export const getConfigForType = type =>
-    ROUTES.find(config => config.type === type);
+  ROUTES.find(config => config.type === type);
 
 export const getConfigForRoute = url =>
   ROUTES.find(config => config.path === url);

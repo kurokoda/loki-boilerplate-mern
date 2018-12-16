@@ -3,7 +3,7 @@
 import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import ReactModal from 'react-modal';
-import style from '../../theme';
+import { ApplicationContext } from '../../context/application';
 
 ReactModal.setAppElement('#root');
 
@@ -12,6 +12,8 @@ ReactModal.setAppElement('#root');
  */
 
 class Modal extends Component {
+  static contextType = ApplicationContext;
+
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -23,6 +25,8 @@ class Modal extends Component {
 
   render() {
     const { config } = this.props;
+    const { theme } = this.context;
+    const styles = Modal.getStyles({ theme });
 
     let ModalContent;
 
@@ -38,7 +42,7 @@ class Modal extends Component {
             contentLabel={config.get('contentLabel')}
             onAfterOpen={config.get('onAfterOpen')}
             onRequestClose={config.get('onRequestClose')}
-            style={customStyles}
+            style={styles}
           >
             <ModalContent />
           </ReactModal>
@@ -56,9 +60,9 @@ Modal.defaultProps = {
   config: null
 };
 
-const customStyles = {
+Modal.getStyles = config => ({
   overlay: {
-    backgroundColor: style.modal.color.overlay,
+    backgroundColor: config.theme.getIn(['modal', 'color', 'overlay']),
     zIndex: '1000'
   },
   content: {
@@ -72,6 +76,6 @@ const customStyles = {
     top: '50%',
     transform: 'translate(-50%, -50%)'
   }
-};
+});
 
 export default Modal;

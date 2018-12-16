@@ -6,9 +6,11 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import Feature from '../feature';
 import Well from '../../../well';
-import style from '../../../../theme';
+import { ApplicationContext } from '../../../../context/application';
 
 class Category extends Component {
+  static contextType = ApplicationContext;
+
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -19,9 +21,9 @@ class Category extends Component {
   }
 
   render() {
-    const classes = Category.getClasses();
     const { category } = this.props;
-
+    const { theme } = this.context;
+    const classes = Category.getClasses({ theme });
     const features = category.get('features');
     const name = category.get('name');
 
@@ -29,15 +31,17 @@ class Category extends Component {
       <Fragment>
         <Well>
           <h3 className={classes.name}>{name}</h3>
-          {features.map(feature => <Feature feature={feature} key={feature.get('id')} />)}
+          {features.map(feature => (
+            <Feature feature={feature} key={feature.get('id')} />
+          ))}
         </Well>
       </Fragment>
     );
   }
 }
 
-Category.getClasses = () => {
-  const styles = Category.getStyles();
+Category.getClasses = config => {
+  const styles = Category.getStyles(config);
 
   return {
     container: css(styles.container),
@@ -55,11 +59,11 @@ Category.propTypes = {
  * @methodof Category
  * @returns {object} The class's styles
  */
-Category.getStyles = () =>
+Category.getStyles = config =>
   StyleSheet.create({
     name: {
-      color: style.feature.color.headerText,
-      margin: '10px 10px 10px',
+      color: config.theme.getIn(['app', 'color', 'headerText']),
+      margin: '10px 10px 10px'
     }
   });
 

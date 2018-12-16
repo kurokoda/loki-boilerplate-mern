@@ -9,13 +9,15 @@ import Footer from '../../container/footer';
 import Header from '../../container/header';
 import Subheader from '../../component/subheader';
 import Helmet from './helmet';
-import style from '../../theme';
+import { ApplicationContext } from '../../context/application';
 
 /**
  * This is the top-level application component. It acts as the root of the component tree
  */
 
 class App extends Component {
+  static contextType = ApplicationContext;
+
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -27,7 +29,8 @@ class App extends Component {
 
   render() {
     const { modal } = this.props;
-    const classes = App.getClasses();
+    const { theme } = this.context;
+    const classes = App.getClasses({ theme });
     return (
       <main className={classes.applicationContainer} id="application">
         <Helmet />
@@ -45,8 +48,8 @@ class App extends Component {
   }
 }
 
-App.getClasses = () => {
-  const styles = App.getStyles();
+App.getClasses = config => {
+  const styles = App.getStyles(config);
 
   return {
     applicationContainer: css(styles.applicationContainer),
@@ -55,10 +58,10 @@ App.getClasses = () => {
   };
 };
 
-App.getStyles = () =>
+App.getStyles = config =>
   StyleSheet.create({
     applicationContainer: {
-      backgroundColor: style.app.color.background,
+      backgroundColor: config.theme.getIn(['app', 'color', 'background']),
       position: 'relative'
     },
     headerContainer: {

@@ -1,13 +1,13 @@
 import { css, StyleSheet } from 'aphrodite';
 import React from 'react';
-import style from '../../theme';
 import Image from '../../assets/images/subheader/tinyorange.jpg';
+
 /**
  * The application Subheader component. Contains page links.
  * @return {XML} A Subheader component
  */
 const Subheader = () => {
-  const classes = Subheader.getClasses({ style });
+  const classes = Subheader.getClasses();
 
   return (
     <div className={classes.imageContainer}>
@@ -22,8 +22,8 @@ Subheader.propTypes = {};
 
 Subheader.defaultProps = {};
 
-Subheader.getClasses = config => {
-  const styles = Subheader.getStyles(config);
+Subheader.getClasses = () => {
+  const styles = Subheader.getStyles();
 
   return {
     image: css(styles.image),

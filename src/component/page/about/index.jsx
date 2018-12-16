@@ -10,7 +10,6 @@ import { localize } from '../../../utils/strings';
 import Loading from '../../loading';
 import Well from '../../well';
 import Helmet from './helmet';
-import style from '../../../theme';
 import { ApplicationContext } from '../../../context/application';
 
 class AboutPage extends Component {
@@ -36,7 +35,8 @@ class AboutPage extends Component {
 
   render() {
     const strings = this.context.strings;
-    const classes = AboutPage.getClasses();
+    const theme = this.context.theme;
+    const classes = AboutPage.getClasses({ theme });
     const title = localize(strings, ['about', 'title']).toUpperCase();
     const paragraphOne = localize(strings, ['about', 'paragraphOne']);
     const paragraphTwo = localize(strings, ['about', 'paragraphTwo']);
@@ -58,31 +58,23 @@ class AboutPage extends Component {
                 development
               </h5>
               <br />
-              <p className={classes.text}>
-                {paragraphOne}
-              </p>
+              <p className={classes.text}>{paragraphOne}</p>
               <br />
               <h5 className={classes.header}>Opinionated style rules</h5>
               <br />
-              <p className={classes.text}>
-                {paragraphTwo}
-              </p>
+              <p className={classes.text}>{paragraphTwo}</p>
               <br />
               <h5 className={classes.header}>
                 Start with everything, build with what you need.
               </h5>
               <br />
-              <p className={classes.text}>
-                {paragraphThree}
-              </p>
+              <p className={classes.text}>{paragraphThree}</p>
               <br />
               <h5 className={classes.header}>
                 Every effort should leverage opportunity for maximum benefit
               </h5>
               <br />
-              <p className={classes.text}>
-                {paragraphFour}
-              </p>
+              <p className={classes.text}>{paragraphFour}</p>
               <br />
             </Well>
           </div>
@@ -116,8 +108,8 @@ class AboutPage extends Component {
   }
 }
 
-AboutPage.getClasses = () => {
-  const styles = AboutPage.getStyles();
+AboutPage.getClasses = config => {
+  const styles = AboutPage.getStyles(config);
 
   return {
     container: css(styles.container),
@@ -131,23 +123,22 @@ AboutPage.getClasses = () => {
  * @methodof AboutPage
  * @returns {object} The class's styles
  */
-AboutPage.getStyles = () =>
-    StyleSheet.create({
-      container: {
-        minHeight: 'calc(100vh-100px)',
-        padding: '0 40px 0 40px',
-        width: '100%'
-      },
-      header: {
-        color: style.about.color.headerText,
-        textTransform: 'uppercase'
-      },
-      text: {
-        color: style.about.color.text,
-        fontSize: '18px'
-      }
-    });
-
+AboutPage.getStyles = config =>
+  StyleSheet.create({
+    container: {
+      minHeight: 'calc(100vh-100px)',
+      padding: '0 40px 0 40px',
+      width: '100%'
+    },
+    header: {
+      color: config.theme.getIn(['app', 'color', 'headerText']),
+      textTransform: 'uppercase'
+    },
+    text: {
+      color: config.theme.getIn(['app', 'color', 'text']),
+      fontSize: config.theme.getIn(['app', 'fontSize', 'primary'])
+    }
+  });
 
 AboutPage.propTypes = {
   /** Dispatches action to request page data */

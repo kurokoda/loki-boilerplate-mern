@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
-import style from '../../../theme';
 import { localize } from '../../../utils/strings';
 import { HOME as ROUTE_CONFIG } from '../../../utils/route/config';
 
@@ -38,12 +37,10 @@ class HomePage extends Component {
 
   render() {
     const strings = this.context.strings;
-    const classes = HomePage.getClasses();
+    const theme = this.context.theme;
+    const classes = HomePage.getClasses({ theme });
     const title = localize(strings, ['home', 'title']).toUpperCase();
-    const subtitle = localize(strings, [
-      'home',
-      'subtitle'
-    ]).toUpperCase();
+    const subtitle = localize(strings, ['home', 'subtitle']).toUpperCase();
     const paragraphOne = localize(strings, ['home', 'paragraphOne']);
     const paragraphTwo = localize(strings, ['home', 'paragraphTwo']);
     const paragraphThree = localize(strings, ['home', 'paragraphThree']);
@@ -59,21 +56,13 @@ class HomePage extends Component {
             <Well>
               <h3 className={classes.header}>{title}</h3>
               <h5 className={classes.header}>{subtitle}</h5>
-              <p className={classes.text}>
-                {paragraphOne}
-              </p>
+              <p className={classes.text}>{paragraphOne}</p>
               <br />
-              <p className={classes.text}>
-                {paragraphTwo}
-              </p>
+              <p className={classes.text}>{paragraphTwo}</p>
               <br />
-              <p className={classes.text}>
-                {paragraphThree}
-              </p>
+              <p className={classes.text}>{paragraphThree}</p>
               <br />
-              <p className={classes.text}>
-                {paragraphFour}
-              </p>
+              <p className={classes.text}>{paragraphFour}</p>
               <br />
             </Well>
           </div>
@@ -107,8 +96,8 @@ class HomePage extends Component {
   }
 }
 
-HomePage.getClasses = () => {
-  const styles = HomePage.getStyles();
+HomePage.getClasses = config => {
+  const styles = HomePage.getStyles(config);
 
   return {
     container: css(styles.container),
@@ -122,7 +111,7 @@ HomePage.getClasses = () => {
  * @methodof HomePage
  * @returns {object} The class's styles
  */
-HomePage.getStyles = () =>
+HomePage.getStyles = config =>
   StyleSheet.create({
     container: {
       minHeight: 'calc(100vh-100px)',
@@ -130,12 +119,12 @@ HomePage.getStyles = () =>
       width: '100%'
     },
     header: {
-      color: style.about.color.headerText,
+      color: config.theme.getIn(['app', 'color', 'headerText']),
       textTransform: 'uppercase'
     },
     text: {
-      color: style.about.color.text,
-      fontSize: '18px'
+      color: config.theme.getIn(['app', 'color', 'text']),
+      fontSize: config.theme.getIn(['app', 'fontSize', 'primary'])
     }
   });
 

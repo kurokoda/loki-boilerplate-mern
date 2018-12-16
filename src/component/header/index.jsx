@@ -4,7 +4,6 @@ import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import style from '../../theme';
 import { getIncrementedElementName } from '../../utils/collection';
 import { localize } from '../../utils/strings';
 import { ROUTES } from '../../utils/route';
@@ -33,8 +32,9 @@ class Header extends Component {
 
   render() {
     const { signOut, user } = this.props;
+    const { theme } = this.context;
     const strings = this.context.strings;
-    const classes = Header.getClasses({ style });
+    const classes = Header.getClasses({ theme });
 
     return (
       <div id="header" className={classes.container}>
@@ -55,7 +55,11 @@ class Header extends Component {
                     key={getIncrementedElementName('desktopPageLink')}
                     route={route}
                   >
-                    {localize(strings, ['header', 'links', route.camelCaseKey]).toUpperCase()}
+                    {localize(strings, [
+                      'header',
+                      'links',
+                      route.camelCaseKey
+                    ]).toUpperCase()}
                   </PageLink>
                 );
               }
@@ -65,16 +69,28 @@ class Header extends Component {
               {!user && (
                 <Fragment>
                   <ActionLink callback={this.signIn}>
-                    {localize(strings, ['header', 'links', 'signIn']).toUpperCase()}
+                    {localize(strings, [
+                      'header',
+                      'links',
+                      'signIn'
+                    ]).toUpperCase()}
                   </ActionLink>
                   <ActionLink callback={this.signUp}>
-                    {localize(strings, ['header', 'links', 'signUp']).toUpperCase()}
+                    {localize(strings, [
+                      'header',
+                      'links',
+                      'signUp'
+                    ]).toUpperCase()}
                   </ActionLink>
                 </Fragment>
               )}
               {user && (
                 <ActionLink callback={signOut}>
-                  {localize(strings, ['header', 'links', 'signOut']).toUpperCase()}
+                  {localize(strings, [
+                    'header',
+                    'links',
+                    'signOut'
+                  ]).toUpperCase()}
                 </ActionLink>
               )}
             </div>
@@ -258,7 +274,7 @@ Header.getClasses = config => {
   };
 };
 
-Header.getStyles = () =>
+Header.getStyles = config =>
   StyleSheet.create({
     activeLink: {
       color: 'blue',
@@ -266,7 +282,7 @@ Header.getStyles = () =>
       fontWeight: 'bold'
     },
     container: {
-      backgroundColor: style.header.color.background,
+      backgroundColor: config.theme.getIn(['header', 'color', 'background']),
       boxShadow: '0 4px 7px 0 rgba(0, 0, 0, 0.2)',
       width: '100%',
 

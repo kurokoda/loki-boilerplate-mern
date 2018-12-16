@@ -7,7 +7,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import { FEATURES as ROUTE_CONFIG } from '../../../utils/route/config';
 import { localize } from '../../../utils/strings';
-
 import Loading from '../../loading';
 import Helmet from './helmet';
 import Category from './category';
@@ -36,7 +35,8 @@ class FeaturesPage extends Component {
 
   render() {
     const strings = this.context.strings;
-    const classes = FeaturesPage.getClasses();
+    const theme = this.context.theme;
+    const classes = FeaturesPage.getClasses({ theme });
     const { pageData } = this.props;
     const title = localize(strings, ['features', 'title']).toUpperCase();
 
@@ -88,8 +88,8 @@ class FeaturesPage extends Component {
   }
 }
 
-FeaturesPage.getClasses = () => {
-  const styles = FeaturesPage.getStyles();
+FeaturesPage.getClasses = config => {
+  const styles = FeaturesPage.getStyles(config);
 
   return {
     container: css(styles.container)
@@ -112,7 +112,7 @@ FeaturesPage.defaultProps = {
  * @methodof FeaturesPage
  * @returns {object} The class's styles
  */
-FeaturesPage.getStyles = () =>
+FeaturesPage.getStyles = config =>
   StyleSheet.create({
     container: {
       minHeight: 'calc(100vh-100px)',

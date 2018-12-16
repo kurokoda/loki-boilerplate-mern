@@ -69,10 +69,7 @@ export function signUp(props, onSuccess, onError) {
       },
       method: 'post'
     })
-      .then(
-        res =>
-          res.ok ? Promise.resolve(res) : Promise.reject(res.status)
-      )
+      .then(res => (res.ok ? Promise.resolve(res) : Promise.reject(res.status)))
       .then(payload => {
         dispatch({
           payload,
@@ -83,7 +80,7 @@ export function signUp(props, onSuccess, onError) {
         }
       })
       .catch(error => {
-        console.log(error)
+        console.log(error);
         dispatch({
           error,
           type: SIGN_UP_ERROR
