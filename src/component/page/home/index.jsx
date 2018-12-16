@@ -33,8 +33,9 @@ class HomePage extends Component {
    * @returns {void}
    */
   componentDidMount() {
+    const { log } = this.props;
     !this.hasPageData && this.fetchPageData();
-
+    log({type: 'HOME_PAGE_LOAD'})
     window.scrollTo(0, 0);
   }
 

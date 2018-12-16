@@ -4,9 +4,9 @@ import mongoConnect from 'connect-mongo';
 import session from 'express-session';
 import mongoose from 'mongoose';
 import authRouter from './router/auth';
+import loggingRouter from './router/logging';
 import pageRouter from './router/page';
 import userRouter from './router/user';
-
 mongoose.Promise = global.Promise;
 
 export default class Database {
@@ -40,7 +40,7 @@ export default class Database {
     );
 
     app.use(session(sessionConfig));
-
+    app.use(loggingRouter);
     app.use(authRouter);
     app.use(pageRouter);
     app.use(userRouter);

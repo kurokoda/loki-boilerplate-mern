@@ -28,10 +28,10 @@ class Category extends Component {
 
     return (
       <Fragment>
-          <h3 className={classes.name}>{name}</h3>
-          {features.map(feature => (
-            <Feature feature={feature} key={feature.get('id')} />
-          ))}
+        <h3 className={classes.name}>{name}</h3>
+        {features.map(feature => (
+          <Feature feature={feature} key={feature.get('id')} />
+        ))}
       </Fragment>
     );
   }
