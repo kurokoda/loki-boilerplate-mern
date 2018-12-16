@@ -50,6 +50,7 @@ export default {
   header: {
     color: {
       pageLink: APPLICATION_TEXT,
+      pageLinkActive: PRIMARY,
       actionLink: APPLICATION_TEXT,
       background: APPLICATION_BACKGROUND
     }

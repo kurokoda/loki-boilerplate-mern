@@ -1,6 +1,7 @@
 import { css, StyleSheet } from 'aphrodite';
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import { getIncrementedElementName } from '../../../../utils/collection/index';
 import { ApplicationContext } from '../../../../context/application';
 
@@ -8,29 +9,30 @@ class PageLink extends Component {
   static contextType = ApplicationContext;
 
   render() {
-    const { callback, children, route } = this.props;
+    const { callback, children, route, location } = this.props;
     const { theme } = this.context;
-    const classes = PageLink.getClasses({ theme });
+    this.isActive = route.path === location.pathname;
+    const classes = PageLink.getClasses({
+      isActive: this.isActive,
+      isHover: this.isHover,
+      theme
+    });
+
     return (
-      <div
+      <a
         key={getIncrementedElementName('desktopLink')}
-        className={classes.page}
+        className={classes.link}
         role="link"
         tabIndex={0}
+        onClick={callback}
       >
-        <div
-          className={[classes.link, classes.activeLink]}
-          key={route.type}
-          onClick={callback}
-        >
-          {children}
-        </div>
-      </div>
+        {children}
+      </a>
     );
   }
 }
 
-export default PageLink;
+export default withRouter(PageLink);
 
 PageLink.propTypes = {
   children: PropTypes.node.isRequired,
@@ -40,8 +42,15 @@ PageLink.propTypes = {
 PageLink.getClasses = config => {
   const styles = PageLink.getStyles(config);
 
+  const { isActive, isHover } = config;
   return {
-    link: css(styles.link),
+    link: css(
+      isHover
+        ? [styles.link, styles.linkHover]
+        : isActive
+          ? [styles.link, styles.linkActive]
+          : styles.link
+    ),
     page: css(styles.page)
   };
 };
@@ -49,21 +58,25 @@ PageLink.getClasses = config => {
 PageLink.getStyles = config =>
   StyleSheet.create({
     link: {
-      cursor: 'pointer',
-      fontFamily: 'Open Sans',
-      margin: '22px 0 0 0',
-      outline: 'none',
-      padding: '14px 5px 5px 5px',
-      textDecoration: 'none !important'
-    },
-    page: {
       color: config.theme.getIn(['header', 'color', 'pageLink']),
+      cursor: 'pointer',
       display: 'inline-block',
+      fontFamily: 'Open Sans',
+      outline: 'none',
+      textDecoration: 'none !important',
       fontWeight: '400',
       margin: '0 20px 0 0',
+      transition: 'color 3s ease',
+
+      ':hover': {
+        color: config.theme.getIn(['header', 'color', 'pageLinkHover'])
+      },
 
       '@media (max-width: 768px)': {
         margin: '0 5px 0 0'
       }
+    },
+    linkActive: {
+      color: config.theme.getIn(['header', 'color', 'pageLinkActive'])
     }
   });
