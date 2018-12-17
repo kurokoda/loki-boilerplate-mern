@@ -242,6 +242,7 @@ DesktopLinks.getStyles = config =>
     },
     button: {
       fontSize: '20pt',
+      outline: 'none',
       position: 'absolute',
       top: '8px',
       right: '10px'

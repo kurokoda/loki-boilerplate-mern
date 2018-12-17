@@ -25,6 +25,10 @@ div:focus {
   outline: none;
 }
 
+button {
+  outline: none;
+}
+
 .pageFade-enter {
   opacity: 0.01;
 }
