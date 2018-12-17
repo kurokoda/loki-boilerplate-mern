@@ -46,7 +46,7 @@ class DesktopLinks extends Component {
           </button>
         </div>
         {isMenuOpen && (
-          <div className={classes.linksContainer}>
+          <div className={classes.linksContainer} onClick={this.onClickOutside}>
             {ROUTES.map(route => {
               let result;
               // Determine if each link should display based on the application state
@@ -116,23 +116,34 @@ class DesktopLinks extends Component {
     );
   }
 
-  signIn = () => {
+  signIn = (event) => {
     const { signIn, setCollapsedHeaderMenuOpen } = this.props;
     setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
     signIn();
+    event.preventDefault();
+    event.stopPropagation();
   };
 
-  signUp = () => {
+  signUp = (event) => {
     const { signUp, setCollapsedHeaderMenuOpen } = this.props;
     setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
     signUp();
+    event.preventDefault();
+    event.stopPropagation();
   };
 
-  signOut = () => {
+  signOut = (event) => {
     const { signOut, setCollapsedHeaderMenuOpen } = this.props;
     setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
     signOut();
+    event.preventDefault();
+    event.stopPropagation();
   };
+
+  onClickOutside = () => {
+    const { setCollapsedHeaderMenuOpen } = this.props;
+    setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
+  }
 
   setCollapsedHeaderMenuOpen = () => {
     const { application, setCollapsedHeaderMenuOpen } = this.props;
