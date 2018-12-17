@@ -21,8 +21,8 @@ export function mapDispatchToProps(dispatch) {
     signOut: () => dispatch(signOut()),
     signUp: (props, onSuccess, onError) =>
       dispatch(signUp(props, onSuccess, onError)),
-    setCollapsedHeaderMenuOpen: (payload) =>
-        dispatch(setCollapsedHeaderMenuOpen(payload))
+    setCollapsedHeaderMenuOpen: payload =>
+      dispatch(setCollapsedHeaderMenuOpen(payload))
   };
 }
 

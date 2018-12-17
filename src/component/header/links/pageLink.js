@@ -9,7 +9,7 @@ class PageLink extends Component {
   static contextType = ApplicationContext;
 
   render() {
-    const { callback, children, route, location } = this.props;
+    const { children, onClick, route, location } = this.props;
     const { theme } = this.context;
     this.isActive = route.path === location.pathname;
     const classes = PageLink.getClasses({
@@ -22,9 +22,9 @@ class PageLink extends Component {
       <a
         key={getIncrementedElementName('desktopLink')}
         className={classes.link}
+        onClick={onClick}
         role="link"
         tabIndex={0}
-        onClick={callback}
       >
         {children}
       </a>

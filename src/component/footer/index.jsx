@@ -74,10 +74,8 @@ class Footer extends Component {
             (updated 05/25/18).
           </div>
           <div className={css([styles.content, styles.contentColor])}>
-            © 2018
-            {CONFIG.COMPANY.LEGAL_NAME}
-            All rights reserved
-            <a href={CONFIG.EXTERNAL_URL.ABOUT_US}>&nbsp; About Us</a>
+            {`© 2018 ${CONFIG.COMPANY.NAME.LEGAL} All rights reserved `}
+            <a href={CONFIG.EXTERNAL_URL.ABOUT_US}>About Us</a>
             .
             <br />
             <br />
@@ -146,9 +144,8 @@ const styles = StyleSheet.create({
     width: '100px',
 
     '@media (max-width: 768px)': {
-      display: 'flex',
       margin: '30px auto 0px auto',
-      width: '300px'
+      width: '200px'
     }
   },
   socialMediaIconContainer: {
@@ -158,10 +155,8 @@ const styles = StyleSheet.create({
     margin: '10px 0 0 0',
 
     '@media (max-width: 768px)': {
-      alignContent: 'flex-end',
       fontSize: '35px',
       margin: '12px',
-      width: '150px'
     }
   }
 });

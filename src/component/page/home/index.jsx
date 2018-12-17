@@ -35,7 +35,7 @@ class HomePage extends Component {
   componentDidMount() {
     const { log } = this.props;
     !this.hasPageData && this.fetchPageData();
-    log({type: 'HOME_PAGE_LOAD'})
+    log({ type: 'HOME_PAGE_LOAD' });
     window.scrollTo(0, 0);
   }
 
@@ -93,11 +93,12 @@ class HomePage extends Component {
   onFetchPageDataSuccess = () => {}; // tslint:disable-line:no-empty
 
   onFetchPageDataError = error => {
-    if (this.connectionAttempts < this.connectionAttemptsAllowed){
-      setTimeout(()=>{
-        this.fetchPageData()
-        this.connectionattempts++;
-      }, 2000)
+    if (this.connectionAttempts < this.connectionAttemptsAllowed) {
+      this.connectionattempts = this.connectionattempts + 1;
+      console.log(this.connectionAttempts, this.connectionAttemptsAllowed);
+      setTimeout(() => {
+        this.fetchPageData();
+      }, 2000);
     } else {
       // notify loading complete
     }

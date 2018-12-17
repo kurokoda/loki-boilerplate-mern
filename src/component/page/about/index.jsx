@@ -104,11 +104,11 @@ class AboutPage extends Component {
   onFetchPageDataSuccess = () => {}; // tslint:disable-line:no-empty
 
   onFetchPageDataError = error => {
-    if (this.connectionAttempts < this.connectionAttemptsAllowed){
-      setTimeout(()=>{
-        this.fetchPageData()
+    if (this.connectionAttempts < this.connectionAttemptsAllowed) {
+      setTimeout(() => {
+        this.fetchPageData();
         this.connectionattempts++;
-      }, 2000)
+      }, 2000);
     } else {
       // notify loading complete
     }

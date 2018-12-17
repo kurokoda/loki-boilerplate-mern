@@ -7,12 +7,9 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { getIncrementedElementName } from '../../../utils/collection/index';
 import { localize } from '../../../utils/strings/index';
 import { ROUTES } from '../../../utils/route/index';
-import SignInForm from '../../form/signIn';
-import SignUpForm from '../../form/signUp';
 import ActionLink from '../links/actionLink';
 import LogoLink from '../links/logoLink';
 import PageLink from '../links/pageLink';
-import ModalContainer from '../../modal/content/wrapper';
 import { ApplicationContext } from '../../../context/application';
 
 /**
@@ -31,7 +28,14 @@ class DesktopLinks extends Component {
   }
 
   render() {
-    const { signOut, user } = this.props;
+    const {
+      getOnLinkClick,
+      onLogoClick,
+      signIn,
+      signOut,
+      signUp,
+      user
+    } = this.props;
     const { theme } = this.context;
     const strings = this.context.strings;
     const classes = DesktopLinks.getClasses({ theme });
@@ -43,7 +47,7 @@ class DesktopLinks extends Component {
             id="desktopLinks__links-container"
             className={classes.linksContainer}
           >
-            <LogoLink callback={this.onLogoClick} />
+            <LogoLink callback={onLogoClick} />
             <div className={classes.links}>
               {ROUTES.map(route => {
                 let result;
@@ -55,7 +59,7 @@ class DesktopLinks extends Component {
                 ) {
                   result = (
                     <PageLink
-                      callback={this.getOnLinkClick(route)}
+                      onClick={getOnLinkClick(route)}
                       key={getIncrementedElementName('desktopPageLink')}
                       route={route}
                     >
@@ -72,14 +76,14 @@ class DesktopLinks extends Component {
               <div className={classes.userLinkContainer}>
                 {!user && (
                   <Fragment>
-                    <ActionLink callback={this.signIn}>
+                    <ActionLink onClick={signIn}>
                       {localize(strings, [
                         'header',
                         'links',
                         'signIn'
                       ]).toUpperCase()}
                     </ActionLink>
-                    <ActionLink callback={this.signUp}>
+                    <ActionLink onClick={signUp}>
                       {localize(strings, [
                         'header',
                         'links',
@@ -89,7 +93,7 @@ class DesktopLinks extends Component {
                   </Fragment>
                 )}
                 {user && (
-                  <ActionLink callback={signOut}>
+                  <ActionLink onClick={signOut}>
                     {localize(strings, [
                       'header',
                       'links',
@@ -104,140 +108,6 @@ class DesktopLinks extends Component {
       </div>
     );
   }
-
-  getOnLinkClick = route => {
-    const { fetchPageData, history } = this.props;
-
-    if (route.api && route.api.pageData) {
-      return () => {
-        fetchPageData(
-          route.type,
-          () => {
-            history.push(route.path);
-          },
-          () => {
-            history.push('/error');
-          }
-        );
-      };
-    } else {
-      return () => {
-        history.push(route.path);
-      };
-    }
-  };
-
-  signIn = () => {
-    const { modalHide, modalShow } = this.props;
-
-    modalShow({
-      Content: () => (
-        <ModalContainer title="Sign In" onClose={modalHide}>
-          <SignInForm onSubmit={this.onSignIn} />
-        </ModalContainer>
-      ),
-      contentLabel: 'Sign In Form',
-      onRequestClose: modalHide
-    });
-  };
-
-  signUp = () => {
-    const { modalHide, modalShow } = this.props;
-
-    modalShow(
-      {
-        Content: () => (
-          <ModalContainer title="Sign Up" onClose={modalHide}>
-            <SignUpForm onSubmit={this.onSignUp} />
-          </ModalContainer>
-        ),
-        contentLabel: 'Sign Up Form',
-        onRequestClose: modalHide
-      },
-      this.onSignUpSuccess,
-      this.onSignUpError
-    );
-  };
-
-  onLogoClick = () => {
-    const { fetchPageData, history } = this.props;
-
-    fetchPageData(
-      'home',
-      () => {
-        history.push('/');
-      },
-      () => {
-        history.push('/error');
-      }
-    );
-  };
-
-  onSignIn = props => {
-    const { signIn } = this.props;
-
-    signIn(props, this.onSignInSuccess, this.onSignInError);
-  };
-
-  onSignInSuccess = payload => {
-    const { modalHide } = this.props;
-    modalHide();
-  };
-
-  onSignInError = error => {
-    const { modalHide, modalShow } = this.props;
-
-    switch (error) {
-      case 404:
-        modalShow({
-          Content: () => (
-            <ModalContainer title="Sign In Error" onClose={modalHide}>
-              There was an error signing you in.
-            </ModalContainer>
-          ),
-          contentLabel: 'Sign In Form',
-          onRequestClose: modalHide
-        });
-        break;
-      default:
-        console.log('Unhandled server error', error); // tslint:disable-line:no-console
-    }
-    return this;
-  };
-
-  onSignUp = props => {
-    const { signUp } = this.props;
-
-    signUp(props, this.onSignUpSuccess, this.onSignUpError);
-  };
-
-  onSignUpSuccess = () => {
-    const { modalHide, modalShow } = this.props;
-
-    modalShow({
-      Content: () => (
-        <ModalContainer title="Sign Up Success" onClose={modalHide}>
-          Welcome to the secret welcome page
-        </ModalContainer>
-      ),
-      contentLabel: 'Sign In Form',
-      onRequestClose: modalHide
-    });
-  };
-
-  onSignUpError = error => {
-    const { modalHide, modalShow } = this.props;
-
-    modalShow({
-      Content: () => (
-        <ModalContainer title="Sign Up Error" onClose={modalHide}>
-          There was an error signing you up.
-        </ModalContainer>
-      ),
-      contentLabel: 'Sign In Form',
-      onRequestClose: modalHide
-    });
-  };
 }
 
 export default withRouter(DesktopLinks);
@@ -287,11 +157,7 @@ DesktopLinks.getStyles = config =>
       fontWeight: 'bold'
     },
     container: {
-      backgroundColor: config.theme.getIn([
-        'header',
-        'color',
-        'background'
-      ]),
+      backgroundColor: config.theme.getIn(['header', 'color', 'background']),
       boxShadow: '0 4px 7px 0 rgba(0, 0, 0, 0.2)',
       width: '100%',
       height: '102px',

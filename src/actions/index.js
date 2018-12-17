@@ -1,4 +1,4 @@
-import * as application from './application'
+import * as application from './application';
 import * as localization from './localization';
 import * as modal from './modal';
 import * as logging from './logging';

@@ -4,10 +4,12 @@ import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import SignInForm from '../../form/signIn';
-import SignUpForm from '../../form/signUp';
+import { getIncrementedElementName } from '../../../utils/collection/index';
+import { localize } from '../../../utils/strings/index';
+import { ROUTES } from '../../../utils/route/index';
+import ActionLink from '../links/actionLink';
 import LogoLink from '../links/logoLink';
-import ModalContainer from '../../modal/content/wrapper';
+import PageLink from '../links/pageLink';
 import { ApplicationContext } from '../../../context/application';
 /**
  * The application desktopLinks component. Contains page links.
@@ -25,168 +27,118 @@ class DesktopLinks extends Component {
   }
 
   render() {
-    const {  application, setCollapsedHeaderMenuOpen, signOut, user } = this.props;
+    const { application, getOnLinkClick, onLogoClick, user } = this.props;
     const { theme } = this.context;
     const strings = this.context.strings;
     const classes = DesktopLinks.getClasses({ theme });
-    const isMenuOpen = application.get('isCollapseHeaderMenuOpen')
+    const isMenuOpen = application.get('isCollapseHeaderMenuOpen');
 
     return (
       <div>
         <div id="header" className={classes.container}>
-          <LogoLink callback={this.onLogoClick} />
+          <LogoLink callback={onLogoClick} />
           <button
-              className={`btn ${classes.button}`}
-              onClick={this.setCollapsedHeaderMenuOpen}
-              onKeyDown={this.setCollapsedHeaderMenuOpen}
+            className={`btn ${classes.button}`}
+            onClick={this.setCollapsedHeaderMenuOpen}
+            onKeyDown={this.setCollapsedHeaderMenuOpen}
           >
             <i className="fas fa-bars" />
           </button>
         </div>
-        { isMenuOpen && <div className={classes.linkContainer} />}
+        {isMenuOpen && (
+          <div className={classes.linksContainer}>
+            {ROUTES.map(route => {
+              let result;
+              // Determine if each link should display based on the application state
+              if (
+                route.navMenu === 'always' ||
+                (route.navMenu === 'no-user' && !user) ||
+                (route.navMenu === 'user' && user)
+              ) {
+                result = (
+                  <div
+                    className={classes.linkContainer}
+                    onClick={getOnLinkClick(route)}
+                  >
+                    <PageLink
+                      key={getIncrementedElementName('desktopPageLink')}
+                      route={route}
+                    >
+                      {localize(strings, [
+                        'header',
+                        'links',
+                        route.camelCaseKey
+                      ]).toUpperCase()}
+                    </PageLink>
+                  </div>
+                );
+              }
+              return result;
+            })}
+            <div className={classes.userLinkContainer}>
+              {!user && (
+                <Fragment>
+                  <div className={classes.linkContainer} onClick={this.signIn}>
+                    <ActionLink>
+                      {localize(strings, [
+                        'header',
+                        'links',
+                        'signIn'
+                      ]).toUpperCase()}
+                    </ActionLink>
+                  </div>
+                  <div className={classes.linkContainer} onClick={this.signUp}>
+                    <ActionLink>
+                      {localize(strings, [
+                        'header',
+                        'links',
+                        'signUp'
+                      ]).toUpperCase()}
+                    </ActionLink>
+                  </div>
+                </Fragment>
+              )}
+              {user && (
+                <div className={classes.linkContainer} onClick={this.signOut}>
+                  <ActionLink>
+                    {localize(strings, [
+                      'header',
+                      'links',
+                      'signOut'
+                    ]).toUpperCase()}
+                  </ActionLink>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     );
   }
 
-  setCollapsedHeaderMenuOpen = () => {
-    const { application, setCollapsedHeaderMenuOpen} = this.props
-    const isMenuOpen = application.get('isCollapseHeaderMenuOpen')
-
-    setCollapsedHeaderMenuOpen({isCollapseHeaderMenuOpen: !isMenuOpen});
-  }
-
-  getOnLinkClick = route => {
-    const { fetchPageData, history } = this.props;
-
-    if (route.api && route.api.pageData) {
-      return () => {
-        fetchPageData(
-          route.type,
-          () => {
-            history.push(route.path);
-          },
-          () => {
-            history.push('/error');
-          }
-        );
-      };
-    } else {
-      return () => {
-        history.push(route.path);
-      };
-    }
-  };
-
   signIn = () => {
-    const { modalHide, modalShow } = this.props;
-
-    modalShow({
-      Content: () => (
-        <ModalContainer title="Sign In" onClose={modalHide}>
-          <SignInForm onSubmit={this.onSignIn} />
-        </ModalContainer>
-      ),
-      contentLabel: 'Sign In Form',
-      onRequestClose: modalHide
-    });
+    const { signIn, setCollapsedHeaderMenuOpen } = this.props;
+    setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
+    signIn();
   };
 
   signUp = () => {
-    const { modalHide, modalShow } = this.props;
-
-    modalShow(
-      {
-        Content: () => (
-          <ModalContainer title="Sign Up" onClose={modalHide}>
-            <SignUpForm onSubmit={this.onSignUp} />
-          </ModalContainer>
-        ),
-        contentLabel: 'Sign Up Form',
-        onRequestClose: modalHide
-      },
-      this.onSignUpSuccess,
-      this.onSignUpError
-    );
+    const { signUp, setCollapsedHeaderMenuOpen } = this.props;
+    setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
+    signUp();
   };
 
-  onLogoClick = () => {
-    const { fetchPageData, history } = this.props;
-
-    fetchPageData(
-      'home',
-      () => {
-        history.push('/');
-      },
-      () => {
-        history.push('/error');
-      }
-    );
+  signOut = () => {
+    const { signOut, setCollapsedHeaderMenuOpen } = this.props;
+    setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
+    signOut();
   };
 
-  onSignIn = props => {
-    const { signIn } = this.props;
+  setCollapsedHeaderMenuOpen = () => {
+    const { application, setCollapsedHeaderMenuOpen } = this.props;
+    const isMenuOpen = application.get('isCollapseHeaderMenuOpen');
 
-    signIn(props, this.onSignInSuccess, this.onSignInError);
-  };
-
-  onSignInSuccess = payload => {
-    const { modalHide } = this.props;
-    modalHide();
-  };
-
-  onSignInError = error => {
-    const { modalHide, modalShow } = this.props;
-
-    switch (error) {
-      case 404:
-        modalShow({
-          Content: () => (
-            <ModalContainer title="Sign In Error" onClose={modalHide}>
-              There was an error signing you in.
-            </ModalContainer>
-          ),
-          contentLabel: 'Sign In Form',
-          onRequestClose: modalHide
-        });
-        break;
-      default:
-        console.log('Unhandled server error', error); // tslint:disable-line:no-console
-    }
-    return this;
-  };
-
-  onSignUp = props => {
-    const { signUp } = this.props;
-
-    signUp(props, this.onSignUpSuccess, this.onSignUpError);
-  };
-
-  onSignUpSuccess = () => {
-    const { modalHide, modalShow } = this.props;
-
-    modalShow({
-      Content: () => (
-        <ModalContainer title="Sign Up Success" onClose={modalHide}>
-          Welcome to the secret welcome page
-        </ModalContainer>
-      ),
-      contentLabel: 'Sign In Form',
-      onRequestClose: modalHide
-    });
-  };
-
-  onSignUpError = error => {
-    const { modalHide, modalShow } = this.props;
-
-    modalShow({
-      Content: () => (
-        <ModalContainer title="Sign Up Error" onClose={modalHide}>
-          There was an error signing you up.
-        </ModalContainer>
-      ),
-      contentLabel: 'Sign In Form',
-      onRequestClose: modalHide
-    });
+    setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: !isMenuOpen });
   };
 }
 
@@ -219,32 +171,39 @@ DesktopLinks.getClasses = config => {
   return {
     button: css(styles.button),
     container: css(styles.container),
-    linkContainer: css(styles.linkContainer)
+    linkContainer: css(styles.linkContainer),
+    linksContainer: css(styles.linksContainer)
   };
 };
 
 DesktopLinks.getStyles = config =>
   StyleSheet.create({
     container: {
-      backgroundColor: config.theme.getIn([
-        'header',
-        'color',
-        'background'
-      ]),
+      backgroundColor: config.theme.getIn(['header', 'color', 'background']),
       display: 'relative',
       height: '60px',
       textAlign: 'center',
       width: '100%'
     },
     linkContainer: {
-      background: 'rgba(0, 0, 0, 0.5)',
+      alignItems: 'center',
+      borderBottom: ' 1px  solid black',
+      cursor: 'pointer',
+      display: 'flex',
+      fontSize: '18px',
+      height: '60px',
+      padding: '0 0 0 20px'
+    },
+    linksContainer: {
+      background: 'rgba(255, 255, 255, 0.85)',
       height: 'calc(100vh - 60px)'
     },
     button: {
+      color: config.theme.getIn(['app', 'color', 'text']),
       fontSize: '20pt',
       outline: 'none',
       position: 'absolute',
-      top: '8px',
-      right: '10px'
+      right: '10px',
+      top: '8px'
     }
   });

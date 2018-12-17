@@ -54,7 +54,7 @@ LogoLink.getStyles = () =>
       padding: '8px 0 0 0',
 
       '@media (max-width: 768px)': {
-        margin: '0 10px 0 10px',
+        margin: '0 10px 0 10px'
       },
 
       '@media (min-width: 769px)': {

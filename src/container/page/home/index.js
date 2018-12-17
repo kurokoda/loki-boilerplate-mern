@@ -14,7 +14,7 @@ export function mapDispatchToProps(dispatch) {
   return {
     fetchPageData: (type, onSuccess, onError) =>
       dispatch(fetchPageData(type, onSuccess, onError)),
-    log: (payload) => dispatch(log(payload))
+    log: payload => dispatch(log(payload))
   };
 }
 

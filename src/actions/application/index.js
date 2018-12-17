@@ -1,4 +1,4 @@
-import { disableScroll, enableScroll } from '../../utils/browser'
+import { disableScroll, enableScroll } from '../../utils/browser';
 
 export const SET_COLLAPSED_HEADER_MENU_OPEN = 'SET_COLLAPSED_HEADER_MENU_OPEN';
 

@@ -7,19 +7,13 @@ class ActionLink extends Component {
   static contextType = ApplicationContext;
 
   render() {
-    const { children, callback } = this.props;
+    const { children, onClick } = this.props;
     const { theme } = this.context;
 
     const classes = ActionLink.getClasses({ theme });
     return (
-      <div className={classes.page}>
-        <span
-          className={classes.link}
-          onClick={callback}
-          onKeyDown={callback}
-          tabIndex={0}
-          role="link"
-        >
+      <div className={classes.page} onClick={onClick}>
+        <span className={classes.link} tabIndex={0} role="link">
           {children}
         </span>
       </div>

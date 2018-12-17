@@ -3,13 +3,15 @@ import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router';
 import CollapsedLinks from './layout/collapsedLinks';
 import ExpandedLinks from './layout/expandedLinks';
+import SignInForm from '../form/signIn';
+import SignUpForm from '../form/signUp';
+import ModalContainer from '../modal/content/wrapper';
 
 /**
  * The application header component. Contains page links.
  * @return {XML} A header component
  */
 class Header extends Component {
-
   componentDidMount() {
     const { history } = this.props;
     history.listen(() => {
@@ -24,14 +26,162 @@ class Header extends Component {
     return (
       <Fragment>
         <div className={classes.expandedLinks}>
-          <ExpandedLinks {...this.props} />
+          <ExpandedLinks
+            {...this.props}
+            getOnLinkClick={this.getOnLinkClick}
+            onLogoClick={this.onLogoClick}
+            signIn={this.signIn}
+            signUp={this.signUp}
+          />
         </div>
         <div className={classes.collapsedLinks}>
-          <CollapsedLinks {...this.props} />
+          <CollapsedLinks
+            {...this.props}
+            getOnLinkClick={this.getOnLinkClick}
+            onLogoClick={this.onLogoClick}
+            signIn={this.signIn}
+            signUp={this.signUp}
+          />
         </div>
       </Fragment>
     );
   }
+
+  getOnLinkClick = route => {
+    const { fetchPageData, history, setCollapsedHeaderMenuOpen } = this.props;
+
+    if (route.api && route.api.pageData) {
+      return () => {
+        setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
+        fetchPageData(
+          route.type,
+          () => {
+            history.push(route.path);
+          },
+          () => {
+            history.push('/error');
+          }
+        );
+      };
+    }
+    return () => {
+      setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
+      history.push(route.path);
+    };
+  };
+
+  signIn = () => {
+    const { modalHide, modalShow } = this.props;
+
+    modalShow({
+      Content: () => (
+        <ModalContainer title="Sign In" onClose={modalHide}>
+          <SignInForm onSubmit={this.onSignIn} />
+        </ModalContainer>
+      ),
+      contentLabel: 'Sign In Form',
+      onRequestClose: modalHide
+    });
+  };
+
+  signUp = () => {
+    const { modalHide, modalShow } = this.props;
+
+    modalShow(
+      {
+        Content: () => (
+          <ModalContainer title="Sign Up" onClose={modalHide}>
+            <SignUpForm onSubmit={this.onSignUp} />
+          </ModalContainer>
+        ),
+        contentLabel: 'Sign Up Form',
+        onRequestClose: modalHide
+      },
+      this.onSignUpSuccess,
+      this.onSignUpError
+    );
+  };
+
+  onLogoClick = () => {
+    const { fetchPageData, history, setCollapsedHeaderMenuOpen } = this.props;
+    setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
+    fetchPageData(
+      'home',
+      () => {
+        history.push('/');
+      },
+      () => {
+        setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
+        history.push('/error');
+      }
+    );
+  };
+
+  onSignIn = props => {
+    const { signIn } = this.props;
+
+    signIn(props, this.onSignInSuccess, this.onSignInError);
+  };
+
+  onSignInSuccess = payload => {
+    const { modalHide } = this.props;
+    modalHide();
+  };
+
+  onSignInError = error => {
+    const { modalHide, modalShow } = this.props;
+
+    switch (error) {
+      case 404:
+        modalShow({
+          Content: () => (
+            <ModalContainer title="Sign In Error" onClose={modalHide}>
+              There was an error signing you in.
+            </ModalContainer>
+          ),
+          contentLabel: 'Sign In Form',
+          onRequestClose: modalHide
+        });
+        break;
+      default:
+        console.log('Unhandled server error', error); // tslint:disable-line:no-console
+    }
+    return this;
+  };
+
+  onSignUp = props => {
+    const { signUp } = this.props;
+
+    signUp(props, this.onSignUpSuccess, this.onSignUpError);
+  };
+
+  onSignUpSuccess = () => {
+    const { modalHide, modalShow } = this.props;
+
+    modalShow({
+      Content: () => (
+        <ModalContainer title="Sign Up Success" onClose={modalHide}>
+          Welcome to the secret welcome page
+        </ModalContainer>
+      ),
+      contentLabel: 'Sign In Form',
+      onRequestClose: modalHide
+    });
+  };
+
+  onSignUpError = error => {
+    const { modalHide, modalShow } = this.props;
+
+    modalShow({
+      Content: () => (
+        <ModalContainer title="Sign Up Error" onClose={modalHide}>
+          There was an error signing you up.
+        </ModalContainer>
+      ),
+      contentLabel: 'Sign In Form',
+      onRequestClose: modalHide
+    });
+  };
 }
 
 export default withRouter(Header);

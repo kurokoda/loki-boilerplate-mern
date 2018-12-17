@@ -59,9 +59,9 @@ class FeaturesPage extends Component {
             <Helmet />
             <h3 className={classes.header}>{title}</h3>
             <Well>
-            {categories.map(category => (
-              <Category category={category} key={category.get('name')} />
-            ))}
+              {categories.map(category => (
+                <Category category={category} key={category.get('name')} />
+              ))}
             </Well>
           </div>
         )}
@@ -87,11 +87,11 @@ class FeaturesPage extends Component {
   onFetchPageDataSuccess = () => {}; // tslint:disable-line:no-empty
 
   onFetchPageDataError = error => {
-    if (this.connectionAttempts < this.connectionAttemptsAllowed){
-      setTimeout(()=>{
-        this.fetchPageData()
+    if (this.connectionAttempts < this.connectionAttemptsAllowed) {
+      setTimeout(() => {
+        this.fetchPageData();
         this.connectionattempts++;
-      }, 2000)
+      }, 2000);
     } else {
       // notify loading complete
     }
@@ -113,18 +113,17 @@ FeaturesPage.getClasses = config => {
 };
 
 FeaturesPage.getStyles = config =>
-    StyleSheet.create({
-      container: {
-        minHeight: 'calc(100vh-100px)',
-        padding: '0 40px 0 40px',
-        width: '100%'
-      },
-      header: {
-        color: config.theme.getIn(['app', 'color', 'headerText']),
-        textTransform: 'uppercase'
-      },
-    });
-
+  StyleSheet.create({
+    container: {
+      minHeight: 'calc(100vh-100px)',
+      padding: '0 40px 0 40px',
+      width: '100%'
+    },
+    header: {
+      color: config.theme.getIn(['app', 'color', 'headerText']),
+      textTransform: 'uppercase'
+    }
+  });
 
 FeaturesPage.propTypes = {
   /** Dispatches action to request page data */

@@ -14,7 +14,9 @@ export default (state = defaultState, action) => {
   const { SET_COLLAPSED_HEADER_MENU_OPEN } = applicationActions;
   switch (action.type) {
     case SET_COLLAPSED_HEADER_MENU_OPEN:
-      return state.merge({ isCollapseHeaderMenuOpen: action.payload.isCollapseHeaderMenuOpen });
+      return state.merge({
+        isCollapseHeaderMenuOpen: action.payload.isCollapseHeaderMenuOpen
+      });
     default:
       return state;
   }
