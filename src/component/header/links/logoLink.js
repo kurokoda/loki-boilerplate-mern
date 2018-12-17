@@ -1,8 +1,8 @@
 import { css, StyleSheet } from 'aphrodite';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Logo from '../../../../assets/images/logo/index';
-import { ApplicationContext } from '../../../../context/application';
+import Logo from '../../../assets/images/logo/index';
+import { ApplicationContext } from '../../../context/application';
 
 class LogoLink extends Component {
   static contextType = ApplicationContext;
@@ -50,9 +50,11 @@ LogoLink.getStyles = () =>
       alignItems: 'center',
       cursor: 'pointer',
       display: 'flex',
+      justifyContent: 'center',
+      padding: '8px 0 0 0',
 
       '@media (max-width: 768px)': {
-        margin: '0 10px 0 10px'
+        margin: '0 10px 0 10px',
       },
 
       '@media (min-width: 769px)': {

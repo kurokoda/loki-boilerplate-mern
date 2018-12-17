@@ -1,3 +1,4 @@
+import application from './application';
 import localization from './localization';
 import logging from './logging';
 import modal from './modal';
@@ -10,6 +11,7 @@ import { connectRouter } from 'connected-react-router';
 export default history => {
   return {
     router: connectRouter(history),
+    application,
     localization,
     logging,
     modal,

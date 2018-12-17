@@ -2,8 +2,8 @@ import { css, StyleSheet } from 'aphrodite';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import { getIncrementedElementName } from '../../../../utils/collection/index';
-import { ApplicationContext } from '../../../../context/application';
+import { getIncrementedElementName } from '../../../utils/collection/index';
+import { ApplicationContext } from '../../../context/application';
 
 class PageLink extends Component {
   static contextType = ApplicationContext;

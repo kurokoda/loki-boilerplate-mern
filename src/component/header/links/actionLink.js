@@ -1,7 +1,7 @@
 import { css, StyleSheet } from 'aphrodite';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ApplicationContext } from '../../../../context/application';
+import { ApplicationContext } from '../../../context/application';
 
 class ActionLink extends Component {
   static contextType = ApplicationContext;
