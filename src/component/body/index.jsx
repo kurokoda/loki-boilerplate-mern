@@ -6,6 +6,10 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { ROUTES } from '../../utils/route';
 import Error from '../../container/page/error';
 
+//TODO delete
+import MobileWebContainer from '../../container/page/mobileWeb';
+import MobileWebComponent from '../page/mobileWeb/index';
+
 // TODO Add JSDoc comments
 
 const Body = props => {
@@ -31,6 +35,12 @@ const Body = props => {
                   props={props}
                 />
               ))}
+              <Route
+                  path="/mobile-web"
+                  render={props => (
+                      <MobileWebContainer {...props} Layout={MobileWebComponent} />
+                  )}
+              />
               <Route component={Error} />
             </Switch>
           </section>
