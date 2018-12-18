@@ -25,7 +25,6 @@ if (!store.getState().localization) {
 if (!store.getState().theme) {
   const theme = require('./theme/light').default;
   store.dispatch(hydrateThemeData(theme));
-  console.log('Force hydrating theme data', theme);
 }
 
 const applicationContext = {

@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
 
     '@media (max-width: 768px)': {
       fontSize: '35px',
-      margin: '12px',
+      margin: '12px'
     }
   }
 });

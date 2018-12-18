@@ -26,20 +26,24 @@ const Body = props => {
         >
           <section className="route-section">
             <Switch location={location}>
-              {ROUTES.map(route => (
-                <Route
-                  component={route.component}
-                  exact={route.exact}
-                  key={route.type}
-                  path={route.path}
-                  props={props}
-                />
-              ))}
+              {ROUTES.map(route => {
+                const Container = route.container;
+                const Layout = route.component;
+                return (
+                  <Route
+                    render={props => <Container {...props} Layout={Layout} />}
+                    exact={route.exact}
+                    key={route.type}
+                    path={route.path}
+                    props={props}
+                  />
+                );
+              })}
               <Route
-                  path="/mobile-web"
-                  render={props => (
-                      <MobileWebContainer {...props} Layout={MobileWebComponent} />
-                  )}
+                path="/mobile-web"
+                render={props => (
+                  <MobileWebContainer {...props} Layout={MobileWebComponent} />
+                )}
               />
               <Route component={Error} />
             </Switch>

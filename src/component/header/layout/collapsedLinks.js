@@ -116,7 +116,7 @@ class DesktopLinks extends Component {
     );
   }
 
-  signIn = (event) => {
+  signIn = event => {
     const { signIn, setCollapsedHeaderMenuOpen } = this.props;
     setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
     signIn();
@@ -124,7 +124,7 @@ class DesktopLinks extends Component {
     event.stopPropagation();
   };
 
-  signUp = (event) => {
+  signUp = event => {
     const { signUp, setCollapsedHeaderMenuOpen } = this.props;
     setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
     signUp();
@@ -132,7 +132,7 @@ class DesktopLinks extends Component {
     event.stopPropagation();
   };
 
-  signOut = (event) => {
+  signOut = event => {
     const { signOut, setCollapsedHeaderMenuOpen } = this.props;
     setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
     signOut();
@@ -143,7 +143,7 @@ class DesktopLinks extends Component {
   onClickOutside = () => {
     const { setCollapsedHeaderMenuOpen } = this.props;
     setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
-  }
+  };
 
   setCollapsedHeaderMenuOpen = () => {
     const { application, setCollapsedHeaderMenuOpen } = this.props;

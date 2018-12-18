@@ -1,11 +1,14 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
-import { fetchPageData } from '../../../actions/page';
+import { fetchPageData as fetchPageDataAction } from '../../../actions/page';
 
 class MobileWebPage extends Component {
   render = () => {
-    const { Layout, _fetchPageData } = this.props;
-    return <Layout fetchPageData={_fetchPageData} />;
+    const { fetchPageData, Layout, pageData } = this.props;
+
+    return <Layout fetchPageData={fetchPageData} pageData={pageData} />;
   };
 }
 
@@ -17,8 +20,8 @@ export function mapStateToProps({ pageData }) {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    _fetchPageData: (type, onSuccess, onError) =>
-      dispatch(fetchPageData(type, onSuccess, onError))
+    fetchPageData: (type, onSuccess, onError) =>
+      dispatch(fetchPageDataAction(type, onSuccess, onError))
   };
 }
 
@@ -26,3 +29,9 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(MobileWebPage);
+
+MobileWebPage.propTypes = {
+  Layout: PropTypes.node.isRequired,
+  fetchPageData: PropTypes.func.isRequired,
+  pageData: ImmutablePropTypes.map.isRequired
+};

@@ -37,19 +37,19 @@ class MobileWebPage extends Component {
     const { fetchPageData } = this.props;
     console.log('fetching page data');
     fetchPageData(
-        'home',
-        this.onFetchPageDataSuccess,
-        this.onFetchPageDataError
+      'home',
+      this.onFetchPageDataSuccess,
+      this.onFetchPageDataError
     );
   }
 
   onFetchPageDataSuccess = () => {
     console.log('success!');
-  }
+  };
 
   onFetchPageDataError = error => {
     console.log('error!');
-  }
+  };
 
   render() {
     const strings = this.context.strings;
@@ -62,35 +62,36 @@ class MobileWebPage extends Component {
 
     return (
       <Fragment>
-          <div id="MobileWeb-page" className={classes.container}>
-            <Helmet />
-            <Well>
-              <h3 className={classes.header}>Mobile Web</h3>
-              <br />
-              <h5 className={classes.header}>
-                An exciting attempt to allow our application to display both web and mobile
-              </h5>
-              <br />
-              <p className={classes.text}>{paragraphOne}</p>
-              <br />
-              <h5 className={classes.header}>Opinionated style rules</h5>
-              <br />
-              <p className={classes.text}>{paragraphTwo}</p>
-              <br />
-              <h5 className={classes.header}>
-                Start with everything, build with what you need.
-              </h5>
-              <br />
-              <p className={classes.text}>{paragraphThree}</p>
-              <br />
-              <h5 className={classes.header}>
-                Every effort should leverage opportunity for maximum benefit
-              </h5>
-              <br />
-              <p className={classes.text}>{paragraphFour}</p>
-              <br />
-            </Well>
-          </div>
+        <div id="MobileWeb-page" className={classes.container}>
+          <Helmet />
+          <Well>
+            <h3 className={classes.header}>Mobile Web</h3>
+            <br />
+            <h5 className={classes.header}>
+              An exciting attempt to allow our application to display both web
+              and mobile
+            </h5>
+            <br />
+            <p className={classes.text}>{paragraphOne}</p>
+            <br />
+            <h5 className={classes.header}>Opinionated style rules</h5>
+            <br />
+            <p className={classes.text}>{paragraphTwo}</p>
+            <br />
+            <h5 className={classes.header}>
+              Start with everything, build with what you need.
+            </h5>
+            <br />
+            <p className={classes.text}>{paragraphThree}</p>
+            <br />
+            <h5 className={classes.header}>
+              Every effort should leverage opportunity for maximum benefit
+            </h5>
+            <br />
+            <p className={classes.text}>{paragraphFour}</p>
+            <br />
+          </Well>
+        </div>
       </Fragment>
     );
   }

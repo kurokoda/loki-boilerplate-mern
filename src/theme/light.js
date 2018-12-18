@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 const WHITE = '#FFF';
 const BLACK = '#000';
 const VERY_DARK_GRAY = '#333333';

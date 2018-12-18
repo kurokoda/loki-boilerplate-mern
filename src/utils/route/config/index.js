@@ -6,11 +6,20 @@ import PasswordResetContainer from '../../../container/page/passwordReset';
 import PasswordRequestContainer from '../../../container/page/passwordRequest';
 import WelcomeContainer from '../../../container/page/welcome';
 
+import AboutComponent from '../../../component/page/about';
+import FeatureComponent from '../../../component/page/feature';
+import FeaturesComponent from '../../../component/page/features';
+import HomeComponent from '../../../component/page/home';
+import PasswordResetComponent from '../../../component/page/passwordReset';
+import PasswordRequestComponent from '../../../component/page/passwordRequest';
+import WelcomeComponent from '../../../component/page/welcome';
+
 export const ABOUT = {
   api: {
     pageData: '/api/page/about'
   },
-  component: AboutContainer,
+  container: AboutContainer,
+  component: AboutComponent,
   camelCaseKey: 'about',
   navMenu: 'always',
   path: '/about',
@@ -21,7 +30,8 @@ export const FEATURE = {
   api: {
     pageData: '/api/page/feature'
   },
-  component: FeatureContainer,
+  container: FeatureContainer,
+  component: FeatureComponent,
   camelCaseKey: 'feature',
   navMenu: 'never',
   path: '/feature',
@@ -32,7 +42,8 @@ export const FEATURES = {
   api: {
     pageData: '/api/page/features'
   },
-  component: FeaturesContainer,
+  container: FeaturesContainer,
+  component: FeaturesComponent,
   camelCaseKey: 'features',
   navMenu: 'always',
   path: '/features',
@@ -43,7 +54,8 @@ export const HOME = {
   api: {
     pageData: '/api/page/home'
   },
-  component: HomeContainer,
+  container: HomeContainer,
+  component: HomeComponent,
   exact: true,
   camelCaseKey: 'home',
   navMenu: 'never',
@@ -52,7 +64,8 @@ export const HOME = {
 };
 
 export const PASSWORD_RESET = {
-  component: PasswordResetContainer,
+  container: PasswordResetContainer,
+  component: PasswordResetComponent,
   camelCaseKey: 'passwordReset',
   navMenu: 'never',
   path: '/password-reset',
@@ -63,7 +76,8 @@ export const PASSWORD_REQUEST = {
   api: {
     requestPassword: '/api/auth/passwordResetRequest'
   },
-  component: PasswordRequestContainer,
+  container: PasswordRequestContainer,
+  component: PasswordRequestComponent,
   camelCaseKey: 'passwordRequest',
   navMenu: 'never',
   path: '/password-request',
@@ -71,7 +85,8 @@ export const PASSWORD_REQUEST = {
 };
 
 export const WELCOME = {
-  component: WelcomeContainer,
+  container: WelcomeContainer,
+  component: WelcomeComponent,
   camelCaseKey: 'welcome',
   navMenu: 'user',
   path: '/welcome',

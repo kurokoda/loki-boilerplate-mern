@@ -1,6 +1,19 @@
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
-import { fetchPageData } from '../../../actions/page';
-import { FeaturesPage } from '../../../component/page';
+import { fetchPageData as fetchPageDataAction } from '../../../actions/page';
+import { log as logAction } from '../../../actions/logging';
+
+class FeaturesContainer extends Component {
+  render = () => {
+    const { fetchPageData, Layout, log, pageData } = this.props;
+
+    return (
+      <Layout fetchPageData={fetchPageData} log={log} pageData={pageData} />
+    );
+  };
+}
 
 export function mapStateToProps({ pageData }) {
   return {
@@ -11,11 +24,23 @@ export function mapStateToProps({ pageData }) {
 export function mapDispatchToProps(dispatch) {
   return {
     fetchPageData: (type, onSuccess, onError) =>
-      dispatch(fetchPageData(type, onSuccess, onError))
+      dispatch(fetchPageDataAction(type, onSuccess, onError)),
+    log: payload => dispatch(logAction(payload))
   };
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FeaturesPage);
+)(FeaturesContainer);
+
+FeaturesContainer.propTypes = {
+  Layout: PropTypes.func.isRequired,
+  log: PropTypes.func.isRequired,
+  fetchPageData: PropTypes.func.isRequired,
+  pageData: ImmutablePropTypes.map
+};
+
+FeaturesContainer.defaultProps = {
+  pageData: null
+};

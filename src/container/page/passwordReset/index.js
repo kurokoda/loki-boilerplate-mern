@@ -1,16 +1,32 @@
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { log as logAction } from '../../../actions/logging';
 
-import { PasswordResetPage } from '../../../component/page';
+class PasswordResetContainer extends Component {
+  render = () => {
+    const { Layout, log } = this.props;
 
-export function mapStateToProps() {
+    return <Layout log={log} />;
+  };
+}
+
+export function mapStateToProps({}) {
   return {};
 }
 
 export function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    log: payload => dispatch(logAction(payload))
+  };
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PasswordResetPage);
+)(PasswordResetContainer);
+
+PasswordResetContainer.propTypes = {
+  Layout: PropTypes.func.isRequired,
+  log: PropTypes.func.isRequired
+};
