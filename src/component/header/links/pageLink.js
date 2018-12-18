@@ -19,7 +19,7 @@ class PageLink extends Component {
     });
 
     return (
-      <a
+      <div
         key={getIncrementedElementName('desktopLink')}
         className={classes.link}
         onClick={onClick}
@@ -27,7 +27,7 @@ class PageLink extends Component {
         tabIndex={0}
       >
         {children}
-      </a>
+      </div>
     );
   }
 }

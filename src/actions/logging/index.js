@@ -24,10 +24,10 @@ export function log(payload) {
             : Promise.reject(new Error('Invalid response in log()'))
       )
       .then(payload => {
-        console.log('Logging success', payload);
+        console.log('Log:', payload);
       })
       .catch(error => {
-        console.log('Logging error', error);
+        console.log('Log error: ', error);
       });
   };
 }

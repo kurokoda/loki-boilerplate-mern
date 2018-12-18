@@ -4,7 +4,6 @@ import { css, StyleSheet } from 'aphrodite';
 import React, { Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
-import style from '../../../../theme/dark';
 import { ApplicationContext } from '../../../../context/application';
 
 class Feature extends Component {
@@ -24,7 +23,6 @@ class Feature extends Component {
     const { theme } = this.context;
 
     const name = feature.get('name');
-    const slug = feature.get('id');
     const implemented = feature.get('implemented');
 
     const classes = Feature.getClasses({ theme, implemented });

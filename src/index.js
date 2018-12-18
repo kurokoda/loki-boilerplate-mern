@@ -1,7 +1,7 @@
 import { StyleSheet } from 'aphrodite';
 import { ConnectedRouter } from 'connected-react-router';
 import React from 'react';
-import { hydrate, render } from 'react-dom';
+import { render } from 'react-dom';
 import { Frontload } from 'react-frontload';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
@@ -31,8 +31,6 @@ const applicationContext = {
   strings: store.getState().localization,
   theme: store.getState().theme
 };
-
-console.log('theme', store.getState().theme);
 
 const Application = (
   <Provider store={store}>

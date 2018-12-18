@@ -1,6 +1,5 @@
 import { css, StyleSheet } from 'aphrodite';
 import React, { Component } from 'react';
-import Logo from '../../assets/images/logo';
 import { ApplicationContext } from '../../context/application';
 
 /**
@@ -20,10 +19,6 @@ class Loading extends Component {
   }
 
   render() {
-    const { theme } = this.context;
-
-    console.log(this.context);
-
     return (
       <div id="loading" className={css(styles.loading)}>
         <div>LOADING</div>

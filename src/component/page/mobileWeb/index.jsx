@@ -35,7 +35,6 @@ class MobileWebPage extends Component {
 
   fetchPageData() {
     const { fetchPageData } = this.props;
-    console.log('fetching page data');
     fetchPageData(
       'home',
       this.onFetchPageDataSuccess,

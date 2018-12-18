@@ -11,7 +11,7 @@ const Subheader = () => {
 
   return (
     <div className={classes.imageContainer}>
-      <img className={classes.image} src={Image} />
+      <img alt="A psychedelic tiger" className={classes.image} src={Image} />
     </div>
   );
 };

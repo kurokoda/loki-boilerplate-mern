@@ -11,8 +11,8 @@ class WelcomeContainer extends Component {
   };
 }
 
-export function mapStateToProps({}) {
-  return {};
+export function mapStateToProps() {
+  return null;
 }
 
 export function mapDispatchToProps(dispatch) {

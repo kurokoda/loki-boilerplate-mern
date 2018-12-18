@@ -1,9 +1,5 @@
-/* tslint:disable:no-console */
-/* tslint:disable:max-line-length */
-
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import style from '../../../theme/dark';
 import { ApplicationContext } from '../../../context/application';
 
 /**

@@ -82,7 +82,6 @@ class HomePage extends Component {
 
   fetchPageData() {
     const { fetchPageData } = this.props;
-    console.log('fetching page data');
     fetchPageData(
       ROUTE_CONFIG.type,
       this.onFetchPageDataSuccess,
