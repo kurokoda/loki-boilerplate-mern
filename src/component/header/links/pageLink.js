@@ -6,8 +6,6 @@ import { getIncrementedElementName } from '../../../utils/collection/index';
 import { ApplicationContext } from '../../../context/application';
 
 class PageLink extends Component {
-  static contextType = ApplicationContext;
-
   render() {
     const { children, onClick, route, location } = this.props;
     const { theme } = this.context;
@@ -80,3 +78,5 @@ PageLink.getStyles = config =>
       color: config.theme.getIn(['header', 'color', 'pageLinkActive'])
     }
   });
+
+PageLink.contextType = ApplicationContext;

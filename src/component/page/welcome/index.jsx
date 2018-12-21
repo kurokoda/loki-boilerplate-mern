@@ -43,12 +43,14 @@ class WelcomePage extends Component {
     return (
       <Fragment>
         {// Redirect if there is no user
-        !user && <Redirect to="/" />}
+        ! user && <Redirect to="/" />}
         <div id="home-page" className={classes.container}>
           <Helmet />
           <Well>
             <h3 className={classes.header}>{title}</h3>
+            <br/>
             <h5 className={classes.header}>{subtitle}</h5>
+            <br/>
             <p className={classes.text}>{paragraphOne}</p>
             <br />
             <p className={classes.text}>{paragraphTwo}</p>

@@ -7,10 +7,10 @@ import { log as logAction } from '../../../actions/logging';
 
 class HomeContainer extends Component {
   render = () => {
-    const { fetchPageData, Layout, log, pageData } = this.props;
+    const { Layout } = this.props;
 
     return (
-      <Layout fetchPageData={fetchPageData} log={log} pageData={pageData} />
+      <Layout {...this.props} />
     );
   };
 }

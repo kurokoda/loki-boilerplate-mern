@@ -5,9 +5,9 @@ import { log as logAction } from '../../../actions/logging';
 
 class PasswordResetContainer extends Component {
   render = () => {
-    const { Layout, log } = this.props;
+    const { Layout } = this.props;
 
-    return <Layout log={log} />;
+    return <Layout {...this.props} />;
   };
 }
 

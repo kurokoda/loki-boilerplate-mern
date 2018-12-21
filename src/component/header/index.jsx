@@ -48,25 +48,10 @@ class Header extends Component {
   }
 
   getOnLinkClick = route => {
-    const { fetchPageData, history, setCollapsedHeaderMenuOpen } = this.props;
-
-    if (route.api && route.api.pageData) {
-      return () => {
-        setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
-        fetchPageData(
-          route.type,
-          () => {
-            history.push(route.path);
-          },
-          () => {
-            history.push('/error');
-          }
-        );
-      };
-    }
+    const { navigateToPage, setCollapsedHeaderMenuOpen } = this.props;
     return () => {
       setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
-      history.push(route.path);
+      navigateToPage(route.type);
     };
   };
 
@@ -103,18 +88,9 @@ class Header extends Component {
   };
 
   onLogoClick = () => {
-    const { fetchPageData, history, setCollapsedHeaderMenuOpen } = this.props;
+    const { navigateToPage, setCollapsedHeaderMenuOpen } = this.props;
     setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
-    fetchPageData(
-      'home',
-      () => {
-        history.push('/');
-      },
-      () => {
-        setCollapsedHeaderMenuOpen({ isCollapseHeaderMenuOpen: false });
-        history.push('/error');
-      }
-    );
+    navigateToPage('home');
   };
 
   onSignIn = props => {
@@ -124,8 +100,9 @@ class Header extends Component {
   };
 
   onSignInSuccess = payload => {
-    const { modalHide } = this.props;
+    const { modalHide, navigateToPage } = this.props;
     modalHide();
+    navigateToPage('welcome');
   };
 
   onSignInError = error => {

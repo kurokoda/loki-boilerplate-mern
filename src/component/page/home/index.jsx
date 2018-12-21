@@ -7,14 +7,13 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import { localize } from '../../../utils/strings';
 import { HOME as ROUTE_CONFIG } from '../../../utils/route/config';
-
+import Divider from '../../divider';
 import Loading from '../../loading';
 import Well from '../../well';
 import Helmet from './helmet';
 import { ApplicationContext } from '../../../context/application';
 
 class HomePage extends Component {
-  static contextType = ApplicationContext;
 
   connectionAttemptsAllowed = 5;
   connectionAttempts = 0;
@@ -59,9 +58,11 @@ class HomePage extends Component {
             <Helmet />
             <Well>
               <h3 className={classes.header}>{title}</h3>
+              <br/>
               <h5 className={classes.header}>{subtitle}</h5>
+              <br/>
               <p className={classes.text}>{paragraphOne}</p>
-              <br />
+              <Divider />
               <p className={classes.text}>{paragraphTwo}</p>
               <br />
               <p className={classes.text}>{paragraphThree}</p>
@@ -109,6 +110,8 @@ class HomePage extends Component {
   }
 }
 
+export default withRouter(HomePage);
+
 HomePage.getClasses = config => {
   const styles = HomePage.getStyles(config);
 
@@ -152,7 +155,7 @@ HomePage.defaultProps = {
   pageData: null
 };
 
-export default withRouter(HomePage);
+HomePage.contextType = ApplicationContext;
 
 // TODO move getStyles() from render to componentDidMount
 // TODO move immutable.js data hack into reducer

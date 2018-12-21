@@ -13,12 +13,10 @@ import PageLink from '../links/pageLink';
 import { ApplicationContext } from '../../../context/application';
 
 /**
- * The application desktopLinks component. Contains page links.
- * @return {XML} A desktopLinks component
+ * The application expandedLinks component. Contains page links.
+ * @return {XML} A expandedLinks component
  */
-class DesktopLinks extends Component {
-  static contextType = ApplicationContext;
-
+class ExpandedLinks extends Component {
   componentDidMount() {
     const { history } = this.props;
     history.listen(() => {
@@ -38,13 +36,13 @@ class DesktopLinks extends Component {
     } = this.props;
     const { theme } = this.context;
     const strings = this.context.strings;
-    const classes = DesktopLinks.getClasses({ theme });
+    const classes = ExpandedLinks.getClasses({ theme });
 
     return (
       <div>
-        <div id="expandedDesktopLinks" className={classes.container}>
+        <div id="expandedExpandedLinks" className={classes.container}>
           <div
-            id="desktopLinks__links-container"
+            id="expandedLinks__links-container"
             className={classes.linksContainer}
           >
             <LogoLink callback={onLogoClick} />
@@ -110,9 +108,9 @@ class DesktopLinks extends Component {
   }
 }
 
-export default withRouter(DesktopLinks);
+export default withRouter(ExpandedLinks);
 
-DesktopLinks.propTypes = {
+ExpandedLinks.propTypes = {
   /** The application router's history */
   history: ReactRouterPropTypes.history.isRequired,
   /** The application hide modal action */
@@ -129,12 +127,12 @@ DesktopLinks.propTypes = {
   user: ImmutablePropTypes.map
 };
 
-DesktopLinks.defaultProps = {
+ExpandedLinks.defaultProps = {
   user: null
 };
 
-DesktopLinks.getClasses = config => {
-  const styles = DesktopLinks.getStyles(config);
+ExpandedLinks.getClasses = config => {
+  const styles = ExpandedLinks.getStyles(config);
 
   return {
     activeLink: css(styles.activeLink),
@@ -149,7 +147,7 @@ DesktopLinks.getClasses = config => {
   };
 };
 
-DesktopLinks.getStyles = config =>
+ExpandedLinks.getStyles = config =>
   StyleSheet.create({
     activeLink: {
       color: 'blue',
@@ -192,3 +190,5 @@ DesktopLinks.getStyles = config =>
       float: 'right'
     }
   });
+
+ExpandedLinks.contextType = ApplicationContext;

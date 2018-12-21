@@ -12,12 +12,10 @@ import LogoLink from '../links/logoLink';
 import PageLink from '../links/pageLink';
 import { ApplicationContext } from '../../../context/application';
 /**
- * The application desktopLinks component. Contains page links.
- * @return {XML} A desktopLinks component
+ * The application collapsedLinks component. Contains page links.
+ * @return {XML} A collapsedLinks component
  */
-class DesktopLinks extends Component {
-  static contextType = ApplicationContext;
-
+class CollapsedLinks extends Component {
   componentDidMount() {
     const { history } = this.props;
     history.listen(() => {
@@ -30,7 +28,7 @@ class DesktopLinks extends Component {
     const { application, getOnLinkClick, onLogoClick, user } = this.props;
     const { theme } = this.context;
     const strings = this.context.strings;
-    const classes = DesktopLinks.getClasses({ theme });
+    const classes = CollapsedLinks.getClasses({ theme });
     const isMenuOpen = application.get('isCollapseHeaderMenuOpen');
 
     return (
@@ -153,9 +151,9 @@ class DesktopLinks extends Component {
   };
 }
 
-export default withRouter(DesktopLinks);
+export default withRouter(CollapsedLinks);
 
-DesktopLinks.propTypes = {
+CollapsedLinks.propTypes = {
   /** The application router's history */
   history: ReactRouterPropTypes.history.isRequired,
   /** The application hide modal action */
@@ -172,12 +170,12 @@ DesktopLinks.propTypes = {
   user: ImmutablePropTypes.map
 };
 
-DesktopLinks.defaultProps = {
+CollapsedLinks.defaultProps = {
   user: null
 };
 
-DesktopLinks.getClasses = config => {
-  const styles = DesktopLinks.getStyles(config);
+CollapsedLinks.getClasses = config => {
+  const styles = CollapsedLinks.getStyles(config);
 
   return {
     button: css(styles.button),
@@ -187,7 +185,7 @@ DesktopLinks.getClasses = config => {
   };
 };
 
-DesktopLinks.getStyles = config =>
+CollapsedLinks.getStyles = config =>
   StyleSheet.create({
     container: {
       backgroundColor: config.theme.getIn(['header', 'color', 'background']),
@@ -218,3 +216,5 @@ DesktopLinks.getStyles = config =>
       top: '8px'
     }
   });
+
+CollapsedLinks.contextType = ApplicationContext;

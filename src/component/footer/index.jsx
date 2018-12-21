@@ -10,8 +10,6 @@ import { ApplicationContext } from '../../context/application';
  */
 
 class Footer extends Component {
-  static contextType = ApplicationContext;
-
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -160,3 +158,5 @@ const styles = StyleSheet.create({
     }
   }
 });
+
+Footer.contextType = ApplicationContext;

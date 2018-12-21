@@ -37,6 +37,11 @@ Subheader.getStyles = () =>
       width: '100%'
     },
     imageContainer: {
-      margin: '0 0 40px 0'
+      padding: '100px 0 0 0 !important',
+      margin: '0 0 40px 0',
+
+      '@media (max-width: 769px)': {
+        padding: '60px 0 0 0 !important',
+      }
     }
   });

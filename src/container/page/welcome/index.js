@@ -5,14 +5,14 @@ import { log as logAction } from '../../../actions/logging';
 
 class WelcomeContainer extends Component {
   render = () => {
-    const { Layout, log } = this.props;
+    const { Layout } = this.props;
 
-    return <Layout log={log} />;
+    return <Layout { ...this.props} />;
   };
 }
 
-export function mapStateToProps() {
-  return null;
+export function mapStateToProps({ user }) {
+  return { user };
 }
 
 export function mapDispatchToProps(dispatch) {

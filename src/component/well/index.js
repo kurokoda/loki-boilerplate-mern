@@ -7,8 +7,6 @@ import PropTypes from 'prop-types';
 import { ApplicationContext } from '../../context/application';
 
 class Well extends Component {
-  static contextType = ApplicationContext;
-
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -65,3 +63,5 @@ Well.getStyles = config =>
   });
 
 export default withRouter(Well);
+
+Well.contextType = ApplicationContext;

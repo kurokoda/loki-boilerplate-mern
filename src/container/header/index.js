@@ -4,7 +4,7 @@ import Header from '../../component/header';
 import { modalHide, modalShow } from '../../actions/modal';
 import { setCollapsedHeaderMenuOpen } from '../../actions/application';
 
-import { fetchPageData } from '../../actions/page';
+import { navigateToPage } from '../../actions/page';
 
 export function mapStateToProps({ application, user }) {
   return { application, user };
@@ -12,10 +12,10 @@ export function mapStateToProps({ application, user }) {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    fetchPageData: (type, onSuccess, onError) =>
-      dispatch(fetchPageData(type, onSuccess, onError)),
     modalHide: payload => dispatch(modalHide()),
     modalShow: payload => dispatch(modalShow(payload)),
+    navigateToPage: (type, params, onSuccess, onError) =>
+        dispatch(navigateToPage(type, params, onSuccess, onError)),
     signIn: (props, onSuccess, onError) =>
       dispatch(signIn(props, onSuccess, onError)),
     signOut: () => dispatch(signOut()),

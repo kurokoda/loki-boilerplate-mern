@@ -18,6 +18,8 @@ export const ABOUT = {
   api: {
     pageData: '/api/page/about'
   },
+  getPageRoute: () => '/about',
+  getDataRoute: () => '/api/page/about',
   container: AboutContainer,
   component: AboutComponent,
   camelCaseKey: 'about',
@@ -30,6 +32,8 @@ export const FEATURE = {
   api: {
     pageData: '/api/page/feature'
   },
+  getPageRoute: () => '/feature',
+  getDataRoute: () => '/api/page/feature',
   container: FeatureContainer,
   component: FeatureComponent,
   camelCaseKey: 'feature',
@@ -42,6 +46,8 @@ export const FEATURES = {
   api: {
     pageData: '/api/page/features'
   },
+  getPageRoute: () => '/features',
+  getDataRoute: () => '/api/page/features',
   container: FeaturesContainer,
   component: FeaturesComponent,
   camelCaseKey: 'features',
@@ -54,6 +60,8 @@ export const HOME = {
   api: {
     pageData: '/api/page/home'
   },
+  getPageRoute: () => '/',
+  getDataRoute: () => '/api/page/home',
   container: HomeContainer,
   component: HomeComponent,
   exact: true,
@@ -64,6 +72,7 @@ export const HOME = {
 };
 
 export const PASSWORD_RESET = {
+  getPageRoute: () => '/password-reset',
   container: PasswordResetContainer,
   component: PasswordResetComponent,
   camelCaseKey: 'passwordReset',
@@ -76,6 +85,7 @@ export const PASSWORD_REQUEST = {
   api: {
     requestPassword: '/api/auth/passwordResetRequest'
   },
+  getPageRoute: params => '/password-request',
   container: PasswordRequestContainer,
   component: PasswordRequestComponent,
   camelCaseKey: 'passwordRequest',
@@ -85,6 +95,7 @@ export const PASSWORD_REQUEST = {
 };
 
 export const WELCOME = {
+  getPageRoute: () => '/welcome',
   container: WelcomeContainer,
   component: WelcomeComponent,
   camelCaseKey: 'welcome',

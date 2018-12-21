@@ -16,8 +16,6 @@ import { ApplicationContext } from '../../context/application';
  */
 
 class App extends Component {
-  static contextType = ApplicationContext;
-
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -48,6 +46,8 @@ class App extends Component {
   }
 }
 
+export default withRouter(App);
+
 App.getClasses = config => {
   const styles = App.getStyles(config);
 
@@ -75,4 +75,4 @@ App.getStyles = config =>
     }
   });
 
-export default withRouter(App);
+App.contextType = ApplicationContext;
