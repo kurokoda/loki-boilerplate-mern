@@ -64,7 +64,7 @@ PageLink.getStyles = config =>
       textDecoration: 'none !important',
       fontWeight: '400',
       margin: '0 20px 0 0',
-      transition: 'color 3s ease',
+      transition: 'color 1s ease',
 
       ':hover': {
         color: config.theme.getIn(['header', 'color', 'pageLinkHover'])

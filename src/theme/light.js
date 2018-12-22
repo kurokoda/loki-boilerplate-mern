@@ -8,6 +8,10 @@ const GRAY = '#999999';
 const LIGHT_GRAY = '#CCCCCC';
 
 const PRIMARY = '#229ebf';
+const PRIMARY_BRIGHT = '#2cd4ff';
+
+const SECONDARY = '#ff8800';;
+const SECONDARY_BRIGHT = '#ffB800';;
 
 const APPLICATION_BACKGROUND = WHITE;
 const APPLICATION_BORDER = WHITE;
@@ -48,7 +52,7 @@ export default {
     color: {
       pageLink: APPLICATION_TEXT,
       pageLinkActive: PRIMARY,
-      pageLinkHover: '#00FF00',
+      pageLinkHover: PRIMARY_BRIGHT,
       actionLink: APPLICATION_TEXT,
       background: APPLICATION_BACKGROUND
     }

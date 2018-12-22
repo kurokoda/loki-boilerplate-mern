@@ -6,8 +6,9 @@ import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router';
-import { FEATURE as ROUTE_CONFIG } from '../../../utils/route';
 import { localize } from '../../../utils/strings';
+import { FEATURE as ROUTE_CONFIG } from '../../../utils/route';
+import Well from '../../well';
 import Loading from '../../loading';
 import Helmet from './helmet';
 import { ApplicationContext } from '../../../context/application';
@@ -34,8 +35,18 @@ class FeaturePage extends Component {
   render() {
     const { pageData } = this.props;
     const strings = this.context.strings;
-    const classes = FeaturePage.getClasses();
+    const theme = this.context.theme;
     const title = localize(strings, ['feature', 'title']).toUpperCase();
+    const classes = FeaturePage.getClasses({ theme });
+
+    let name;
+    let description;
+
+    if(pageData){
+      name = pageData.getIn(['feature', 'name']);
+      description = pageData.getIn(['feature', 'description']);
+    }
+
 
     return (
       <Fragment>
@@ -44,8 +55,14 @@ class FeaturePage extends Component {
         this.hasPageData && (
           <div id="feature-page" className={classes.container}>
             <Helmet />
-            {title}
-            {pageData.getIn(['feature', 'name'])}
+            <Well>
+              <h3 className={classes.header}>{title}</h3>
+              <br/>
+              <h5 className={classes.header}>{name}</h5>
+              <br/>
+              <p className={classes.text}>{description}</p>
+            </Well>
+            {}
           </div>
         )}
         {// Browser or server render without data:
@@ -79,13 +96,39 @@ class FeaturePage extends Component {
   }
 }
 
-FeaturePage.getClasses = () => {
-  const styles = FeaturePage.getStyles();
+export default withRouter(FeaturePage);
+
+FeaturePage.getClasses = (config) => {
+  const styles = FeaturePage.getStyles(config);
 
   return {
-    container: css(styles.container)
+    container: css(styles.container),
+    header: css(styles.header),
+    text: css(styles.text)
   };
 };
+
+/**
+ * Dynamically generates styles
+ * @methodof FeaturePage
+ * @returns {object} The class's styles
+ */
+FeaturePage.getStyles = (config) =>
+    StyleSheet.create({
+      container: {
+        minHeight: 'calc(100vh-100px)',
+        padding: '0 40px 0 40px',
+        width: '100%'
+      },
+      header: {
+        color: config.theme.getIn(['app', 'color', 'headerText']),
+        textTransform: 'uppercase'
+      },
+      text: {
+        color: config.theme.getIn(['app', 'color', 'text']),
+        fontSize: config.theme.getIn(['app', 'fontSize', 'primary'])
+      }
+    });
 
 FeaturePage.propTypes = {
   /** Dispatches action to request page data */
@@ -99,20 +142,6 @@ FeaturePage.propTypes = {
 FeaturePage.defaultProps = {
   pageData: null
 };
-
-/**
- * Dynamically generates styles
- * @methodof FeaturePage
- * @returns {object} The class's styles
- */
-FeaturePage.getStyles = () =>
-  StyleSheet.create({
-    container: {
-      minHeight: 'calc(100vh-100px)'
-    }
-  });
-
-export default withRouter(FeaturePage);
 
 FeaturePage.contextType = ApplicationContext;
 

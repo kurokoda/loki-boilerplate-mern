@@ -8,7 +8,6 @@ import { withRouter } from 'react-router';
 import { localize } from '../../../utils/strings';
 import { HOME as ROUTE_CONFIG } from '../../../utils/route';
 import Divider from '../../divider';
-import Loading from '../../loading';
 import Well from '../../well';
 import Helmet from './helmet';
 import { ApplicationContext } from '../../../context/application';
