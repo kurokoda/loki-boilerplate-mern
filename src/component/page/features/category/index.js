@@ -8,8 +8,6 @@ import Feature from '../feature';
 import { ApplicationContext } from '../../../../context/application';
 
 class Category extends Component {
-  static contextType = ApplicationContext;
-
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -20,7 +18,7 @@ class Category extends Component {
   }
 
   render() {
-    const { category } = this.props;
+    const { category, navigateToPage } = this.props;
     const { theme } = this.context;
     const classes = Category.getClasses({ theme });
     const features = category.get('features');
@@ -30,12 +28,20 @@ class Category extends Component {
       <Fragment>
         <h3 className={classes.name}>{name}</h3>
         {features.map(feature => (
-          <Feature feature={feature} key={feature.get('id')} />
+          <Feature
+              feature={feature}
+              key={feature.get('id')}
+              navigateToPage={navigateToPage}
+          />
         ))}
       </Fragment>
     );
   }
 }
+
+export default withRouter(Category);
+
+Category.contextType = ApplicationContext;
 
 Category.getClasses = config => {
   const styles = Category.getStyles(config);
@@ -63,5 +69,3 @@ Category.getStyles = config =>
       margin: '10px 10px 10px'
     }
   });
-
-export default withRouter(Category);

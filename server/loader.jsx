@@ -13,7 +13,7 @@ import { hydratePageData } from '../src/actions/page';
 import { hydrateLocalizationData } from '../src/actions/localization';
 import App from '../src/component/app/index';
 import createStore from '../src/store/index';
-import { getConfigForRoute, getPageDataForRoute } from '../src/utils/route';
+import { getConfigForRoute, getPageDataForRoute, getDataParamsForRoute } from '../src/utils/route';
 import { ApplicationProvider } from '../src/context/application';
 
 import theme from '../src/theme/light'
@@ -31,15 +31,18 @@ import theme from '../src/theme/light'
 
 export default (req, res) => {
   const config = getConfigForRoute(req.url);
-  if (config && config.api && config.api.pageData) {
+
+  if (config.getDataRoute) {
+    const routeDataParams = getDataParamsForRoute(req.url);
     const absoluteUrl =
-      process.env.REACT_APP_KLAW_API_BASE_URL + config.api.pageData;
+      process.env.REACT_APP_KLAW_API_BASE_URL + config.getDataRoute(routeDataParams);
+
     return getPageDataForRoute(absoluteUrl).then(data => {
       let typedData = Object.assign(data, { pageType: config.type });
       return render(req, res, typedData, config.type);
     });
   }
-  return render(req, res, null, '');
+  return render(req, res);
 };
 
 /**

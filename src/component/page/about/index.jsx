@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
-import { ABOUT as ROUTE_CONFIG } from '../../../utils/route/config';
+import { ABOUT as ROUTE_CONFIG } from '../../../utils/route';
 import { localize } from '../../../utils/strings';
 import Loading from '../../loading';
 import Well from '../../well';
@@ -32,7 +32,6 @@ class AboutPage extends Component {
    * @returns {void}
    */
   componentDidMount() {
-    !this.hasPageData && this.fetchPageData();
     window.scrollTo(0, 0);
   }
 
@@ -48,9 +47,6 @@ class AboutPage extends Component {
 
     return (
       <Fragment>
-        {// Browser render with data:
-        // display the page normally
-        this.hasPageData && (
           <div id="about-page" className={classes.container}>
             <Helmet />
             <Well>
@@ -81,10 +77,6 @@ class AboutPage extends Component {
               <br />
             </Well>
           </div>
-        )}
-        {// Browser or server render without data:
-        //    display the loading component without Helmet
-        !this.hasPageData && <Loading />}
       </Fragment>
     );
   }
@@ -95,7 +87,8 @@ class AboutPage extends Component {
     const { fetchPageData } = this.props;
 
     fetchPageData(
-      ROUTE_CONFIG.type,
+      ROUTE_CONFIG,
+        null,
       this.onFetchPageDataSuccess,
       this.onFetchPageDataError
     );

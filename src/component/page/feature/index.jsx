@@ -6,15 +6,13 @@ import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router';
-import { FEATURE as ROUTE_CONFIG } from '../../../utils/route/config';
+import { FEATURE as ROUTE_CONFIG } from '../../../utils/route';
 import { localize } from '../../../utils/strings';
 import Loading from '../../loading';
 import Helmet from './helmet';
 import { ApplicationContext } from '../../../context/application';
 
 class FeaturePage extends Component {
-  static contextType = ApplicationContext;
-
   /**
    * Controls updates and rendering
    * @returns {boolean} The evaluation to determine whether the component should
@@ -34,6 +32,7 @@ class FeaturePage extends Component {
   }
 
   render() {
+    const { pageData } = this.props;
     const strings = this.context.strings;
     const classes = FeaturePage.getClasses();
     const title = localize(strings, ['feature', 'title']).toUpperCase();
@@ -46,6 +45,7 @@ class FeaturePage extends Component {
           <div id="feature-page" className={classes.container}>
             <Helmet />
             {title}
+            {pageData.getIn(['feature', 'name'])}
           </div>
         )}
         {// Browser or server render without data:
@@ -58,10 +58,12 @@ class FeaturePage extends Component {
   // Business logic
 
   fetchPageData() {
-    const { fetchPageData } = this.props;
+    const { fetchPageData, match } = this.props;
+    const { id } = match.params;
 
     fetchPageData(
-      ROUTE_CONFIG.type,
+      ROUTE_CONFIG,
+      { id },
       this.onFetchPageDataSuccess,
       this.onFetchPageDataError
     );
@@ -111,6 +113,8 @@ FeaturePage.getStyles = () =>
   });
 
 export default withRouter(FeaturePage);
+
+FeaturePage.contextType = ApplicationContext;
 
 // TODO move getStyles() from render to componentDidMount
 // TODO move immutable.js data hack into reducer

@@ -4,7 +4,7 @@ import { css, StyleSheet } from 'aphrodite';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { withRouter } from 'react-router';
-import { PASSWORD_REQUEST as REQUEST_PASSWORD_CONFIG } from '../../../utils/route/config';
+import { PASSWORD_REQUEST as REQUEST_PASSWORD_CONFIG } from '../../../utils/route';
 import RequestPasswordForm from '../../form/requestPassword';
 import Helmet from './helmet';
 
@@ -55,8 +55,7 @@ class RequestPasswordPage extends React.Component {
 
   onSubmitForm(props) {
     const url =
-      process.env.REACT_APP_KLAW_API_BASE_URL +
-      REQUEST_PASSWORD_CONFIG.api.requestPassword;
+      process.env.REACT_APP_KLAW_API_BASE_URL + '/api/auth/passwordResetRequest';
 
     fetch(url, {
       body: JSON.stringify(props),

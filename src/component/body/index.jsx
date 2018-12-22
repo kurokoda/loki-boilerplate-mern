@@ -4,11 +4,9 @@ import { withRouter } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { ROUTES } from '../../utils/route';
-import Error from '../../container/page/error';
+import ErrorContainer from '../../container/page/error';
+import ErrorComponent from '../../component/page/error';
 
-//TODO delete
-import MobileWebContainer from '../../container/page/mobileWeb';
-import MobileWebComponent from '../page/mobileWeb/index';
 
 // TODO Add JSDoc comments
 
@@ -39,13 +37,7 @@ const Body = props => {
                   />
                 );
               })}
-              <Route
-                path="/mobile-web"
-                render={props => (
-                  <MobileWebContainer {...props} Layout={MobileWebComponent} />
-                )}
-              />
-              <Route component={Error} />
+              <Route render={props => <ErrorContainer {...props} Layout={ErrorComponent} />} />
             </Switch>
           </section>
         </CSSTransition>

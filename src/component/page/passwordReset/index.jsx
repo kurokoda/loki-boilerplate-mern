@@ -6,7 +6,7 @@ import qs from 'qs';
 import * as React from 'react';
 import { withRouter } from 'react-router';
 import { Redirect } from 'react-router-dom';
-import { PASSWORD_RESET as RESET_PASSWORD_CONFIG } from '../../../utils/route/config';
+import { PASSWORD_RESET as RESET_PASSWORD_CONFIG } from '../../../utils/route';
 import ResetPasswordForm from '../../form/resetPassword';
 import Helmet from './helmet';
 
@@ -60,9 +60,7 @@ class ResetPasswordPage extends React.Component {
   }
 
   onSubmitForm(props) {
-    const url =
-      process.env.REACT_APP_KLAW_API_BASE_URL +
-      RESET_PASSWORD_CONFIG.api.resetPassword;
+    const url = process.env.REACT_APP_KLAW_API_BASE_URL + '/api/auth/passwordReset'; // TODO I don't think this is hooked up
 
     fetch(url, {
       body: JSON.stringify(props),

@@ -4,6 +4,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 import { fetchPageData as fetchPageDataAction } from '../../../actions/page';
 import { log as logAction } from '../../../actions/logging';
+import { navigateToPage } from '../../../actions/page';
 
 class FeaturesContainer extends Component {
   render = () => {
@@ -23,9 +24,11 @@ export function mapStateToProps({ pageData }) {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    fetchPageData: (type, onSuccess, onError) =>
-      dispatch(fetchPageDataAction(type, onSuccess, onError)),
-    log: payload => dispatch(logAction(payload))
+    fetchPageData: (type,  params, onSuccess, onError) =>
+      dispatch(fetchPageDataAction(type, params, onSuccess, onError)),
+    log: payload => dispatch(logAction(payload)),
+    navigateToPage: (type, params, onSuccess, onError) =>
+        dispatch(navigateToPage(type, params, onSuccess, onError))
   };
 }
 

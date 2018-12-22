@@ -23,8 +23,8 @@ export function mapStateToProps({ pageData }) {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    fetchPageData: (type, onSuccess, onError) =>
-      dispatch(fetchPageDataAction(type, onSuccess, onError)),
+    fetchPageData: (type, params, onSuccess, onError) =>
+      dispatch(fetchPageDataAction(type, params, onSuccess, onError)),
     log: payload => dispatch(logAction(payload))
   };
 }

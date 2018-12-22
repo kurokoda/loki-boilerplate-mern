@@ -7,7 +7,6 @@ import { withRouter } from 'react-router';
 import { ApplicationContext } from '../../../../context/application';
 
 class Feature extends Component {
-  static contextType = ApplicationContext;
 
   /**
    * Controls updates and rendering
@@ -27,9 +26,18 @@ class Feature extends Component {
 
     const classes = Feature.getClasses({ theme, implemented });
 
-    return <div className={classes.container}>{name}</div>;
+    return <div onClick={this.onClick} className={classes.container}>{name}</div>;
+  }
+
+  onClick = () => {
+    const { feature, navigateToPage } = this.props;
+    const id = feature.get('id');
+
+    navigateToPage('feature', {id});
   }
 }
+
+export default withRouter(Feature);
 
 Feature.getClasses = config => {
   const styles = Feature.getStyles(config);
@@ -64,4 +72,4 @@ Feature.getStyles = config =>
     }
   });
 
-export default withRouter(Feature);
+Feature.contextType = ApplicationContext;

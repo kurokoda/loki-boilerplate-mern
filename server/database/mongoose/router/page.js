@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get(`${route}about`, (req, res) => getAboutPageData(req, res));
 
-router.get(`${route}feature`, (req, res) => getFeaturePageData(req, res));
+router.get(`${route}feature/:id`, (req, res) => getFeaturePageData(req, res));
 
 router.get(`${route}features`, (req, res) => getFeaturesPageData(req, res));
 

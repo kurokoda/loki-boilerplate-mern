@@ -3,9 +3,10 @@
 import { css, StyleSheet } from 'aphrodite';
 import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
+import Immutable from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
-import { FEATURES as ROUTE_CONFIG } from '../../../utils/route/config';
+import { FEATURES as ROUTE_CONFIG } from '../../../utils/route';
 import { localize } from '../../../utils/strings';
 import Loading from '../../loading';
 import Helmet from './helmet';
@@ -14,7 +15,6 @@ import { ApplicationContext } from '../../../context/application';
 import Well from '../../well';
 
 class FeaturesPage extends Component {
-  static contextType = ApplicationContext;
 
   connectionAttemptsAllowed = 5;
   connectionAttempts = 0;
@@ -41,13 +41,15 @@ class FeaturesPage extends Component {
     const strings = this.context.strings;
     const theme = this.context.theme;
     const classes = FeaturesPage.getClasses({ theme });
-    const { pageData } = this.props;
+    const { navigateToPage } = this.props;
     const title = localize(strings, ['features', 'title']).toUpperCase();
 
     let categories;
+    let normalizedPageData;
 
     if (this.hasPageData) {
-      categories = pageData.get('categories');
+      normalizedPageData = this.normalizePageData();
+      categories = normalizedPageData.get('categories');
     }
 
     return (
@@ -60,7 +62,11 @@ class FeaturesPage extends Component {
             <h3 className={classes.header}>{title}</h3>
             <Well>
               {categories.map(category => (
-                <Category category={category} key={category.get('name')} />
+                <Category
+                    category={category}
+                    key={category.get('name')}
+                    navigateToPage={navigateToPage}
+                />
               ))}
             </Well>
           </div>
@@ -74,11 +80,36 @@ class FeaturesPage extends Component {
 
   // Business logic
 
+  normalizePageData() {
+    const { pageData } = this.props;
+    const { features } = pageData.toJS();
+    const categoryMap = {};
+
+    let categories;
+    let result;
+
+    features.map((feature)=>{
+      if (categoryMap[feature.category.id]){
+        categoryMap[feature.category.id].features.push(feature)
+      } else {
+        categoryMap[feature.category.id] = {
+          name: feature.category.name,
+          id: feature.category.id,
+          features: [feature]
+        }
+      }
+    });
+
+    categories = Object.values(categoryMap);
+    return Immutable.fromJS({ categories });
+  }
+
   fetchPageData() {
     const { fetchPageData } = this.props;
 
     fetchPageData(
-      ROUTE_CONFIG.type,
+      ROUTE_CONFIG,
+      null,
       this.onFetchPageDataSuccess,
       this.onFetchPageDataError
     );
@@ -102,6 +133,8 @@ class FeaturesPage extends Component {
     return pageData && pageData.get('pageType') === ROUTE_CONFIG.type;
   }
 }
+
+export default withRouter(FeaturesPage);
 
 FeaturesPage.getClasses = config => {
   const styles = FeaturesPage.getStyles(config);
@@ -136,7 +169,7 @@ FeaturesPage.defaultProps = {
   pageData: null
 };
 
-export default withRouter(FeaturesPage);
+FeaturesPage.contextType = ApplicationContext;
 
 // TODO move getStyles() from render to componentDidMount
 // TODO move immutable.js data hack into reducer

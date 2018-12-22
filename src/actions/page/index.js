@@ -12,8 +12,7 @@ export const HYDRATE_PAGE_DATA = 'HYDRATE_PAGE_DATA';
  * @returns {object} article of either type `FETCH_ABOUT_PAGE_DATA_SUCCESS` or of type `FETCH_ABOUT_PAGE_DATA_ERROR`
  */
 
-export function fetchPageData(type, onSuccess, onError) {
-  const config = getConfigForType(type);
+export function fetchPageData(config, params, onSuccess, onError) {
 
   return dispatch => {
     dispatch({
@@ -22,7 +21,7 @@ export function fetchPageData(type, onSuccess, onError) {
 
     dispatch(setIsLoading({ isLoading: true }));
 
-    const url = process.env.REACT_APP_KLAW_API_BASE_URL + config.api.pageData;
+    const url = process.env.REACT_APP_KLAW_API_BASE_URL + config.getDataRoute(params);
 
     fetch(url)
       .then(
@@ -33,7 +32,7 @@ export function fetchPageData(type, onSuccess, onError) {
       )
       .then(payload => {
         dispatch({
-          payload: Object.assign(payload, { pageType: type }),
+          payload: Object.assign(payload, { pageType: config.type }),
           type: FETCH_PAGE_DATA_SUCCESS
         });
         dispatch(setIsLoading({ isLoading: false }));

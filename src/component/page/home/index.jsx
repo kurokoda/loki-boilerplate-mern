@@ -6,7 +6,7 @@ import React, { Component, Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withRouter } from 'react-router';
 import { localize } from '../../../utils/strings';
-import { HOME as ROUTE_CONFIG } from '../../../utils/route/config';
+import { HOME as ROUTE_CONFIG } from '../../../utils/route';
 import Divider from '../../divider';
 import Loading from '../../loading';
 import Well from '../../well';
@@ -33,7 +33,6 @@ class HomePage extends Component {
    */
   componentDidMount() {
     const { log } = this.props;
-    !this.hasPageData && this.fetchPageData();
     log({ type: 'HOME_PAGE_LOAD' });
     window.scrollTo(0, 0);
   }
@@ -51,9 +50,6 @@ class HomePage extends Component {
 
     return (
       <Fragment>
-        {// render with data:
-        // display the page normally
-        this.hasPageData && (
           <div id="home-page" className={classes.container}>
             <Helmet />
             <Well>
@@ -71,10 +67,6 @@ class HomePage extends Component {
               <br />
             </Well>
           </div>
-        )}
-        {// Browser or server render without data:
-        // display the loading component without Helmet
-        !this.hasPageData && <Loading />}
       </Fragment>
     );
   }
@@ -83,8 +75,10 @@ class HomePage extends Component {
 
   fetchPageData() {
     const { fetchPageData } = this.props;
+
     fetchPageData(
-      ROUTE_CONFIG.type,
+      ROUTE_CONFIG,
+        null,
       this.onFetchPageDataSuccess,
       this.onFetchPageDataError
     );

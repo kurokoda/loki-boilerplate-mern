@@ -7,6 +7,8 @@ import authRouter from './router/auth';
 import loggingRouter from './router/logging';
 import pageRouter from './router/page';
 import userRouter from './router/user';
+import { seed } from './service/data';
+
 mongoose.Promise = global.Promise;
 
 export default class Database {
@@ -31,6 +33,7 @@ export default class Database {
 
     mongoose.connection.on('connected', () => {
       console.log(`Mongoose default connection open to ${mongoURI}`); // tslint:disable-line:no-console
+      seed();
     });
 
     mongoose.set('useCreateIndex', true);
