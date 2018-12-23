@@ -41,10 +41,12 @@ class FeaturePage extends Component {
 
     let name;
     let description;
+    let descriptionDetail;
 
     if(pageData){
       name = pageData.getIn(['feature', 'name']);
       description = pageData.getIn(['feature', 'description']);
+      descriptionDetail = pageData.getIn(['feature', 'descriptionDetail']);
     }
 
 
@@ -56,11 +58,11 @@ class FeaturePage extends Component {
           <div id="feature-page" className={classes.container}>
             <Helmet />
             <Well>
-              <h3 className={classes.header}>{title}</h3>
+              <h3 className={classes.header}>{name}</h3>
               <br/>
-              <h5 className={classes.header}>{name}</h5>
+              <h5 className={classes.header}>{description}</h5>
               <br/>
-              <p className={classes.text}>{description}</p>
+              <p className={classes.text}>{descriptionDetail}</p>
             </Well>
             {}
           </div>

@@ -19,6 +19,10 @@ const Schema = new mongoose.Schema(
         required: true,
         type: String
       },
+      descriptionDetail: {
+        required: true,
+        type: String
+      },
       category: {
         type: Map,
         of: String
